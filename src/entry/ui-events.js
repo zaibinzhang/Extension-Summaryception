@@ -447,9 +447,9 @@ function cancelManualRun(controller) {
 function onStopSummarize() {
     if (!getIsSummarizing() && !hasActiveAbortController()) {
         if (getSettings().autoPaused) {
-            toastr.info('Already paused.', 'Summaryception');
+            toastr.info('已暂停。', 'Summaryception');
         } else {
-            toastr.info('Nothing is running.', 'Summaryception');
+            toastr.info('没有正在运行的任务。', 'Summaryception');
         }
         return;
     }
@@ -457,11 +457,7 @@ function onStopSummarize() {
     const s = getSettings();
     s.autoPaused = true;
     saveSettings();
-    toastr.warning(
-        'Summarization paused. Progress saved. Press Resume to continue.',
-        'Summaryception',
-        { timeOut: 5000 },
-    );
+    toastr.warning('摘要已暂停。进度已保存。按"继续"以恢复。', 'Summaryception', { timeOut: 5000 });
     $(this).prop('disabled', true);
     setTimeout(() => $(this).prop('disabled', false), 2000);
     updateUI();
@@ -474,12 +470,12 @@ function onStopSummarize() {
 function onResumeSummarize() {
     const s = getSettings();
     if (!s.autoPaused) {
-        toastr.info('Not paused.', 'Summaryception');
+        toastr.info('未暂停。', 'Summaryception');
         return;
     }
     s.autoPaused = false;
     saveSettings();
-    toastr.success('Resumed. Automatic summarization is active again.', 'Summaryception', {
+    toastr.success('已恢复。自动摘要重新激活。', 'Summaryception', {
         timeOut: 3000,
     });
     updateUI();
@@ -493,30 +489,27 @@ function onResumeSummarize() {
 async function onForceSummarize() {
     const s = getEffectiveSettings();
     if (!s.enabled) {
-        toastr.warning('Enable Summaryception first.');
+        toastr.warning('请先启用 Summaryception。');
         return;
     }
     if (getIsSummarizing()) {
-        toastr.warning('Already summarizing. Please wait.');
+        toastr.warning('正在摘要中，请稍候。');
         return;
     }
     showManualCacheWarning(s);
     $(this)
         .prop('disabled', true)
-        .html('<i class="fa-solid fa-spinner fa-spin"></i><span>Working...</span>');
+        .html('<i class="fa-solid fa-spinner fa-spin"></i><span>处理中…</span>');
     try {
         const plan = await buildForceSummaryRoutePlan(getChat(), getChatStore(), s);
 
         if (!plan.ready) {
-            toastr.info(
-                'Nothing to summarize - current chat is within the verbatim window.',
-                'Summaryception',
-            );
+            toastr.info('没有可摘要的内容 - 当前对话在逐字窗口内。', 'Summaryception');
             return;
         }
 
         const overflow = Math.max(plan.batchTurns.length, plan.overflowCount);
-        toastr.info(`${overflow} turns ready to process. Starting...`, 'Summaryception', {
+        toastr.info(`${overflow} 个回合可处理。开始…`, 'Summaryception', {
             timeOut: 2000,
         });
 
@@ -542,7 +535,7 @@ async function onForceSummarize() {
     } finally {
         $(this)
             .prop('disabled', false)
-            .html('<i class="fa-solid fa-bolt"></i><span>Force Summarize</span>');
+            .html('<i class="fa-solid fa-bolt"></i><span>强制摘要</span>');
         updateUI();
     }
 }
@@ -554,11 +547,11 @@ async function onForceSummarize() {
 async function onSlopBreaker() {
     const s = getEffectiveSettings();
     if (!s.enabled) {
-        toastr.warning('Enable Summaryception first.');
+        toastr.warning('请先启用 Summaryception。');
         return;
     }
     if (getIsSummarizing()) {
-        toastr.warning('Already summarizing. Please wait.');
+        toastr.warning('正在摘要中，请稍候。');
         return;
     }
     showManualCacheWarning(s);
@@ -574,7 +567,7 @@ async function onSlopBreaker() {
 
     $(this)
         .prop('disabled', true)
-        .html('<i class="fa-solid fa-spinner fa-spin"></i><span>Working...</span>');
+        .html('<i class="fa-solid fa-spinner fa-spin"></i><span>处理中…</span>');
     try {
         const controller = new AbortController();
         let progressToast = null;
@@ -598,7 +591,7 @@ async function onSlopBreaker() {
     } finally {
         $(this)
             .prop('disabled', false)
-            .html('<i class="fa-solid fa-broom"></i><span>Slop Breaker</span>');
+            .html('<i class="fa-solid fa-broom"></i><span>失控清理</span>');
         updateUI();
     }
 }
@@ -607,11 +600,9 @@ function showManualCacheWarning(settings) {
     if (settings.memoryMode !== MEMORY_MODES.CACHE) {
         return;
     }
-    toastr.info(
-        'Manual summarization updates memory immediately and may reset cache savings for the next request.',
-        'Summaryception',
-        { timeOut: 5000 },
-    );
+    toastr.info('手动摘要会立即更新记忆，并可能使下一次请求的缓存节省失效。', 'Summaryception', {
+        timeOut: 5000,
+    });
 }
 
 /**
@@ -668,7 +659,7 @@ function triggerImport() {
             const text = await file.text();
             const data = JSON.parse(text);
             if (!data.layers || !Array.isArray(data.layers)) {
-                toastr.error('Invalid file format.');
+                toastr.error('无效的文件格式。');
                 return;
             }
 
@@ -687,13 +678,13 @@ function triggerImport() {
 
             await persistAndRefresh({ ui: true });
             toastr.success(
-                `Memory imported. ${store.layers.reduce((sum, l) => sum + (l?.length || 0), 0)} snippets loaded, messages ghosted up to index ${store.summarizedUpTo}.`,
+                `记忆已导入。已加载 ${store.layers.reduce((sum, l) => sum + (l?.length || 0), 0)} 个摘要片段，消息已隐藏到索引 ${store.summarizedUpTo}。`,
                 'Summaryception',
                 { timeOut: 4000 },
             );
         } catch (err) {
             error(err);
-            toastr.error('Import failed - check console.');
+            toastr.error('导入失败 - 请检查控制台。');
         }
     };
     input.click();
@@ -706,9 +697,9 @@ function triggerImport() {
 function onResetDefaults() {
     if (
         !confirm(
-            'Reset all Advanced Settings to defaults?\n\n' +
-                'This will reset sliders, stock prompts, injection template, and strip patterns.\n' +
-                'It will NOT clear your summary memory, connection settings, selected memory mode, or custom prompt fields.',
+            '将所有高级设置重置为默认值？\n\n' +
+                '这将重置滑块、内置提示词、注入模板和去除模式。\n' +
+                '它不会清除你的摘要记忆、连接设置、已选的记忆模式或自定义提示词字段。',
         )
     ) {
         return;
@@ -758,7 +749,7 @@ function onResetDefaults() {
     updateUI();
 
     toastr.success(
-        'Advanced settings reset to defaults. Memory mode, connection settings, and summary memory were preserved.',
+        '高级设置已重置为默认值。记忆模式、连接设置和摘要记忆已保留。',
         'Summaryception',
         { timeOut: 4000 },
     );
@@ -781,14 +772,14 @@ function resetPromptFields(settings) {
  */
 function bindClickHandlers() {
     $(document).on('click', '#sc_clear_memory', async function () {
-        if (!confirm('Clear ALL Summaryception memory for this chat and unghost all messages?')) {
+        if (!confirm('清除该聊天的所有 Summaryception 记忆并取消隐藏所有消息？')) {
             return;
         }
 
         try {
             await clearSummaryceptionMemory({ updateUi: true });
             toastr.success(
-                'Memory cleared & messages unghosted. Reloading chat context.',
+                '记忆已清除，消息已取消隐藏。正在重新加载聊天上下文。',
                 'Summaryception',
                 { timeOut: 2000 },
             );
@@ -796,7 +787,7 @@ function bindClickHandlers() {
         } catch (e) {
             error('Clear memory failed:', e);
             toastr.error(
-                'Clear failed. Open F12 and update Summaryception if this repeats.',
+                '清除失败。若反复出现，请打开 F12 并更新 Summaryception。',
                 'Summaryception',
                 { timeOut: 8000 },
             );
@@ -821,7 +812,7 @@ function bindClickHandlers() {
         a.download = `summaryception_${Date.now()}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        toastr.success('Memory exported', 'Summaryception');
+        toastr.success('记忆已导出', 'Summaryception');
     });
 
     $(document).on('click', '#sc_import', triggerImport);
@@ -829,23 +820,19 @@ function bindClickHandlers() {
     $(document).on('click', '#sc_reset_defaults', onResetDefaults);
 
     $(document).on('click', '#sc_insert_recall_template', function () {
-        if (
-            !confirm(
-                'Replace the current Injection Wrapper Template with the recall-repeat sample?',
-            )
-        ) {
+        if (!confirm('用"召回-重复示例"替换当前的注入包装模板？')) {
             return;
         }
         $('#sc_injection_template').val(RECALL_REPEAT_INJECTION_TEMPLATE).trigger('change');
-        toastr.success('Recall-repeat template inserted.', 'Summaryception');
+        toastr.success('已插入召回-重复模板。', 'Summaryception');
     });
 
     $(document).on('click', '#sc_restore_injection_template', function () {
-        if (!confirm('Restore the default Injection Wrapper Template?')) {
+        if (!confirm('恢复默认的注入包装模板？')) {
             return;
         }
         $('#sc_injection_template').val(defaultSettings.injectionTemplate).trigger('change');
-        toastr.success('Default injection template restored.', 'Summaryception');
+        toastr.success('已恢复默认注入模板。', 'Summaryception');
     });
 }
 

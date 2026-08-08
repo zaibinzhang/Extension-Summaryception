@@ -24,19 +24,19 @@ export function registerSlashCommands() {
                 name: 'sc-status',
                 callback: () => {
                     const store = getChatStore();
-                    const lines = ['**Summaryception Status**'];
-                    lines.push(`Summarized up to index: ${store.summarizedUpTo}`);
+                    const lines = ['**Summaryception 状态**'];
+                    lines.push(`已摘要到索引：${store.summarizedUpTo}`);
                     if (store.layers) {
                         for (let i = 0; i < store.layers.length; i++) {
                             const l = store.layers[i];
                             if (l && l.length > 0) {
-                                lines.push(`Layer ${i}: ${l.length} snippets`);
+                                lines.push(`Layer ${i}：${l.length} 个摘要片段`);
                             }
                         }
                     }
                     return lines.join('\n');
                 },
-                helpString: 'Show Summaryception layer status',
+                helpString: '显示 Summaryception 层级状态',
             }),
         );
 
@@ -45,9 +45,9 @@ export function registerSlashCommands() {
                 name: 'sc-clear',
                 callback: async () => {
                     await clearSummaryceptionMemory({ updateUi: true });
-                    return 'Summaryception memory cleared and messages unghosted.';
+                    return 'Summaryception 记忆已清除，消息已取消隐藏。';
                 },
-                helpString: 'Clear all Summaryception memory and unghost messages for this chat',
+                helpString: '清除该聊天的所有 Summaryception 记忆并取消隐藏消息',
             }),
         );
 
@@ -55,9 +55,9 @@ export function registerSlashCommands() {
             SlashCommand.fromProps({
                 name: 'sc-preview',
                 callback: () => {
-                    return assembleSummaryBlock() || '(No summaries yet)';
+                    return assembleSummaryBlock() || '（尚无摘要）';
                 },
-                helpString: 'Preview the summary block that would be injected',
+                helpString: '预览将要注入的摘要块',
             }),
         );
     } catch (e) {

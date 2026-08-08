@@ -326,7 +326,7 @@ function notifyChinesePolicyRejection(percent) {
         `Summarizer response rejected: CN ideographs were ${displayPercent}% of visible characters.`,
     );
     toastr.warning(
-        `Summarizer response contained too much CN text (${displayPercent}%). Retrying...`,
+        `摘要器回复中包含过多中文文本（${displayPercent}%）。正在重试…`,
         'Summaryception',
         { timeOut: 5000 },
     );

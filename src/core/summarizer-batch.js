@@ -411,7 +411,7 @@ async function commitAtomicLayer0Snippets({ snapshots, pendingSnippets, showToas
 
     if (showToasts) {
         toastr.info(
-            `Cache break – ${pendingSnippets.length} batch${pendingSnippets.length === 1 ? '' : 'es'} saved. Safe to update lorebook or author's note now.`,
+            `缓存断裂——已保存 ${pendingSnippets.length} 个批次。现在可以安全更新 lorebook 或作者注记。`,
             'Summaryception',
             { timeOut: 6000 },
         );
@@ -456,7 +456,7 @@ async function executeLayer0Commit({
 
     if (showToasts) {
         toastr.success(
-            `Summary saved (Layer 0: ${store.layers[0].length} snippets)`,
+            `摘要已保存（Layer 0：${store.layers[0].length} 个摘要片段）`,
             'Summaryception',
             { timeOut: 2000 },
         );
@@ -596,7 +596,7 @@ function showBatchToast(batchLength, showToasts) {
         return;
     }
 
-    toastr.info(`Summarizing ${batchLength} turn${batchLength > 1 ? 's' : ''}…`, 'Summaryception', {
+    toastr.info(`正在摘要 ${batchLength} 个回合…`, 'Summaryception', {
         timeOut: 3000,
         progressBar: true,
     });

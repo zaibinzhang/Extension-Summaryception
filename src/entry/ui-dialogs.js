@@ -3,7 +3,7 @@
  * @returns {void}
  */
 export function showSlopBreakerNoop() {
-    toastr.info('Nothing to reset yet. Wait for an AI reply first.', 'Summaryception');
+    toastr.info('还没有可清理的内容，请先等待一条 AI 回复。', 'Summaryception');
 }
 
 /**
@@ -13,40 +13,34 @@ export function showSlopBreakerNoop() {
  */
 export function showCatchupOutcome(outcome) {
     if (outcome.blocked && outcome.totalBatches === 0) {
-        toastr.warning(
-            'Foreground generation is active. Try Force Summarize again after the response finishes.',
-            'Summaryception',
-            { timeOut: 5000 },
-        );
+        toastr.warning('前台生成正在进行中。请等回复完成后重试强制摘要。', 'Summaryception', {
+            timeOut: 5000,
+        });
     } else if (outcome.cancelled) {
         toastr.warning(
-            `Catch-up paused at ${outcome.completed}/${outcome.totalBatches}. Progress saved - will continue on next message.`,
+            `追补在 ${outcome.completed}/${outcome.totalBatches} 处暂停。进度已保存 - 将在下一条消息时继续。`,
             'Summaryception',
             { timeOut: 5000 },
         );
     } else if (outcome.blocked) {
         toastr.warning(
-            `Catch-up paused at ${outcome.completed}/${outcome.totalBatches}. Try again after generation finishes.`,
+            `追补在 ${outcome.completed}/${outcome.totalBatches} 处暂停。请在生成结束后重试。`,
             'Summaryception',
             { timeOut: 5000 },
         );
     } else if (outcome.failureLimitReached) {
         toastr.error(
-            '3 consecutive failures - API may be down. Pausing catch-up. Progress saved; will resume on next message.',
+            '连续 3 次失败 - API 可能不可用。暂停追补。进度已保存；将在下一条消息时恢复。',
             'Summaryception',
             { timeOut: 8000 },
         );
     } else if (outcome.totalBatches > 0 && outcome.failed === 0) {
-        toastr.success(
-            `Catch-up complete! ${outcome.completed} batches processed.`,
-            'Summaryception',
-            {
-                timeOut: 4000,
-            },
-        );
+        toastr.success(`追补完成！已处理 ${outcome.completed} 个批次。`, 'Summaryception', {
+            timeOut: 4000,
+        });
     } else if (outcome.failed > 0) {
         toastr.warning(
-            `Catch-up finished. ${outcome.completed} succeeded, ${outcome.failed} failed (will retry on next trigger).`,
+            `追补结束。${outcome.completed} 成功，${outcome.failed} 失败（将在下次触发时重试）。`,
             'Summaryception',
             { timeOut: 6000 },
         );
@@ -60,35 +54,31 @@ export function showCatchupOutcome(outcome) {
  */
 export function showSlopBreakerOutcome(outcome) {
     if (outcome.fullyCommitted) {
-        toastr.success('Slop Breaker complete. Reloading chat context.', 'Summaryception', {
+        toastr.success('失控清理完成。正在重新加载聊天上下文。', 'Summaryception', {
             timeOut: 3000,
         });
     } else if (outcome.blocked && outcome.totalBatches === 0) {
-        toastr.warning(
-            'Foreground generation is active. Try Slop Breaker again after the response finishes.',
-            'Summaryception',
-            { timeOut: 5000 },
-        );
+        toastr.warning('前台生成正在进行中。请等回复完成后重试失控清理。', 'Summaryception', {
+            timeOut: 5000,
+        });
     } else if (outcome.totalBatches === 0) {
         showSlopBreakerNoop();
     } else if (outcome.cancelled && outcome.completed === 0) {
-        toastr.warning('Slop Breaker stopped. No new cut was completed.', 'Summaryception', {
+        toastr.warning('失控清理已停止。没有完成新的切割。', 'Summaryception', {
             timeOut: 5000,
         });
     } else if (outcome.cancelled || outcome.blocked) {
-        toastr.warning(
-            'Slop Breaker stopped. Partial progress was saved, but the intended cut was not completed.',
-            'Summaryception',
-            { timeOut: 6000 },
-        );
+        toastr.warning('失控清理已停止。部分进度已保存，但目标切割未完成。', 'Summaryception', {
+            timeOut: 6000,
+        });
     } else if (outcome.completed === 0) {
-        toastr.error('Slop Breaker failed. No new cut was completed.', 'Summaryception', {
+        toastr.error('失控清理失败。没有完成新的切割。', 'Summaryception', {
             timeOut: 6000,
         });
     } else {
         toastr.warning(
-            `Slop Breaker paused after ${outcome.completed} batch${outcome.completed === 1 ? '' : 'es'}. ` +
-                `${outcome.failed} failed; the intended cut was not completed.`,
+            `失控清理在 ${outcome.completed} 个批次后暂停。` +
+                `${outcome.failed} 个失败；目标切割未完成。`,
             'Summaryception',
             { timeOut: 6000 },
         );
@@ -119,7 +109,7 @@ export function createManualProgressToast(progress) {
 export function updateManualProgressToast(progressToast, progress) {
     $(progressToast)
         .find('.toast-message')
-        .text(`${getProgressText(progress)}\nClick x to pause`);
+        .text(`${getProgressText(progress)}\n点击 x 暂停`);
 }
 
 /**
@@ -143,21 +133,21 @@ export function confirmSlopBreaker() {
             .html(
                 `
         <div class="sc-catchup-modal">
-        <h3>Run Slop Breaker?</h3>
+        <h3>运行失控清理（Slop Breaker）？</h3>
         <div class="sc-catchup-dialog">
-        <p>This summarizes the current live conversation context, including messages normally kept verbatim. Use it when the AI is stuck repeating phrases, formats, or corrections. If the latest message is an AI reply, it will be committed into memory and may no longer be safe to swipe or regenerate.</p>
+        <p>这会摘要当前实时的对话上下文，包括通常逐字保留的消息。当 AI 卡在重复语句、格式或纠正时使用。如果最新一条是 AI 回复，它会被提交进记忆，之后可能无法安全地滑动或重新生成。</p>
         <hr>
         <div class="sc-catchup-options">
         <button id="sc_slop_breaker_confirm" class="menu_button">
         <i class="fa-solid fa-broom"></i>
         <div class="sc-btn-text">
-        <span class="sc-btn-label">Break Slop</span>
+        <span class="sc-btn-label">开始清理</span>
         </div>
         </button>
         <button id="sc_slop_breaker_cancel" class="menu_button">
         <i class="fa-solid fa-xmark"></i>
         <div class="sc-btn-text">
-        <span class="sc-btn-label">Cancel</span>
+        <span class="sc-btn-label">取消</span>
         </div>
         </button>
         </div>
@@ -185,6 +175,6 @@ export function confirmSlopBreaker() {
  */
 function getProgressText(progress) {
     const pct = Math.round((progress.completed / progress.totalBatches) * 100);
-    const failStr = progress.failed > 0 ? ` | ${progress.failed} failed` : '';
-    return `${progress.label}: ${progress.completed} / ${progress.totalBatches} batches (${pct}%)${failStr}`;
+    const failStr = progress.failed > 0 ? ` | ${progress.failed} 个失败` : '';
+    return `${progress.label}：${progress.completed} / ${progress.totalBatches} 个批次（${pct}%）${failStr}`;
 }

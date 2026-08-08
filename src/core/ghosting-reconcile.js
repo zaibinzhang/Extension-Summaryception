@@ -65,8 +65,8 @@ export async function repairIfBranched() {
         `Branch repair complete. summarizedUpTo: ${oldSummarizedUpTo} -> ${store.summarizedUpTo}`,
     );
     toastr.info(
-        `Branch detected - trimmed ${oldSummarizedUpTo - store.summarizedUpTo} turns of stale summary data that referenced messages beyond the branch point.`,
-        'Summaryception - Branch Repair',
+        `检测到分支——已裁剪 ${oldSummarizedUpTo - store.summarizedUpTo} 个回合引用分支点之后消息的过期摘要数据。`,
+        'Summaryception - 分支修复',
         { timeOut: 6000 },
     );
 }

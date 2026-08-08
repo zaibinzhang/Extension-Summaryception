@@ -467,7 +467,7 @@ function createHideProgressToast(options, total) {
     if (!options.showProgress || total === 0) {
         return null;
     }
-    return toastr.info(`Hiding messages: 0 / ${total}`, 'Summaryception - Ghosting', {
+    return toastr.info(`正在隐藏消息：0 / ${total}`, 'Summaryception - 隐藏', {
         timeOut: 0,
         extendedTimeOut: 0,
         tapToDismiss: false,
@@ -480,7 +480,7 @@ function createHideProgressToast(options, total) {
  * @returns {unknown}
  */
 function createUnhideProgressToast(total) {
-    return toastr.info(`Unhiding messages: 0 / ${total}`, 'Summaryception - Clearing', {
+    return toastr.info(`正在取消隐藏消息：0 / ${total}`, 'Summaryception - 清除', {
         timeOut: 0,
         extendedTimeOut: 0,
         tapToDismiss: false,
@@ -498,7 +498,7 @@ function updateHideProgress(progressToast, processed, total) {
     if (!progressToast) {
         return;
     }
-    updateProgressText(progressToast, 'Hiding messages', processed, total);
+    updateProgressText(progressToast, '正在隐藏消息', processed, total);
 }
 
 /**
@@ -512,7 +512,7 @@ function updateUnhideProgress(progressToast, processed, total) {
     if (!progressToast || processed % 10 !== 0) {
         return;
     }
-    updateProgressText(progressToast, 'Unhiding messages', processed, total);
+    updateProgressText(progressToast, '正在取消隐藏消息', processed, total);
 }
 
 /**
@@ -525,7 +525,7 @@ function updateUnhideProgress(progressToast, processed, total) {
  */
 function updateProgressText(progressToast, label, processed, total) {
     const pct = Math.round((processed / total) * 100);
-    $(progressToast).find('.toast-message').text(`${label}: ${processed} / ${total} (${pct}%)`);
+    $(progressToast).find('.toast-message').text(`${label}：${processed} / ${total}（${pct}%）`);
 }
 
 /**

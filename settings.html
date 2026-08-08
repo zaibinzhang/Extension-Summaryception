@@ -10,28 +10,28 @@
         <div class="inline-drawer-content">
             <section class="sc-section sc-enable-section">
                 <input type="checkbox" id="sc_enabled" class="sc-sr-only" />
-                <div class="sc-mode-grid sc-ui-mode-grid" role="radiogroup" aria-label="Summaryception mode">
+                <div class="sc-mode-grid sc-ui-mode-grid" role="radiogroup" aria-label="Summaryception 模式">
                     <label class="checkbox_label sc-mode-card" for="sc_mode_off">
                         <span class="sc-toggle-icon fa-solid fa-power-off"></span>
                         <span class="sc-toggle-copy">
-                            <span class="sc-toggle-title">Off</span>
-                            <small class="sc-hint">No memory is injected and nothing summarizes in the background. Your chat stays raw.</small>
+                            <span class="sc-toggle-title">关闭</span>
+                            <small class="sc-hint">不注入任何记忆，后台也不进行任何摘要。对话保持原始状态。</small>
                         </span>
                         <input type="radio" id="sc_mode_off" name="sc_ui_mode" value="off" />
                     </label>
                     <label class="checkbox_label sc-mode-card" for="sc_mode_easy">
                         <span class="sc-toggle-icon fa-solid fa-gauge-high"></span>
                         <span class="sc-toggle-copy">
-                            <span class="sc-toggle-title">Easy</span>
-                            <small class="sc-hint">Picks safe context limits for you and leaves the main controls on screen.</small>
+                            <span class="sc-toggle-title">简易</span>
+                            <small class="sc-hint">自动选择安全的上下文上限，并让主要控制项保留在界面上。</small>
                         </span>
                         <input type="radio" id="sc_mode_easy" name="sc_ui_mode" value="easy" />
                     </label>
                     <label class="checkbox_label sc-mode-card" for="sc_mode_advanced">
                         <span class="sc-toggle-icon fa-solid fa-sliders"></span>
                         <span class="sc-toggle-copy">
-                            <span class="sc-toggle-title">Advanced</span>
-                            <small class="sc-hint">Everything is exposed: routing, prompts, diagnostics, and engine tuning.</small>
+                            <span class="sc-toggle-title">高级</span>
+                            <small class="sc-hint">所有选项全部开放：路由、提示词、诊断与引擎调优。</small>
                         </span>
                         <input type="radio" id="sc_mode_advanced" name="sc_ui_mode" value="advanced" />
                     </label>
@@ -41,67 +41,67 @@
                 <div class="sc-section-header">
                     <h4 class="sc-section-title">
                         <span class="fa-solid fa-power-off"></span>
-                        Summaryception Off
+                        Summaryception 已关闭
                     </h4>
                 </div>
-                <small class="sc-help-text">Memory injection and automatic summarizing are disabled. Existing summaries remain stored. Settings below are still editable and apply when you turn the extension back on.</small>
+                <small class="sc-help-text">记忆注入与自动摘要已禁用。已有摘要仍会保留。下方的设置仍可编辑，重新开启扩展后即生效。</small>
             </div>
             <div id="sc_easy_content" style="display: none;">
-                <div class="sc-console-header" aria-label="Summaryception easy status">
-                    <span id="sc_easy_status_mode" class="sc-console-value">Easy</span>
+                <div class="sc-console-header" aria-label="Summaryception 简易状态">
+                    <span id="sc_easy_status_mode" class="sc-console-value">简易</span>
                     <span class="sc-status-separator" aria-hidden="true">·</span>
-                    <span id="sc_easy_status_worker" class="sc-console-value">Idle</span>
+                    <span id="sc_easy_status_worker" class="sc-console-value">空闲</span>
                     <span class="sc-status-separator" aria-hidden="true">·</span>
-                    <span class="sc-console-value"><strong id="sc_easy_status_snippets">0</strong> snippets</span>
+                    <span class="sc-console-value"><strong id="sc_easy_status_snippets">0</strong> 个摘要片段</span>
                     <span class="sc-status-separator" aria-hidden="true">·</span>
-                    <span class="sc-console-value"><strong id="sc_easy_status_ghosted">0</strong> ghosted</span>
+                    <span class="sc-console-value"><strong id="sc_easy_status_ghosted">0</strong> 已隐藏</span>
                 </div>
                 <section class="sc-section">
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-plug"></span>
-                            Easy Setup
+                            简易设置
                         </h4>
                     </div>
                     <div class="sc-settings-grid">
                         <div class="sc-setting-row">
                             <label for="sc_easy_connection_source">
-                                <span>Fast Summarizer</span>
-                                <small>Main route for raw chat summaries.</small>
+                                <span>快速摘要器</span>
+                                <small>原始对话摘要的主路由。</small>
                             </label>
                             <select id="sc_easy_connection_source" class="text_pole">
-                                <option value="default">Main API</option>
-                                <option value="profile">Connection Profile</option>
+                                <option value="default">主 API</option>
+                                <option value="profile">连接档案</option>
                             </select>
                         </div>
                         <div class="sc-setting-row">
                             <label for="sc_easy_merge_connection_source">
-                                <span>Smart Deep Memory</span>
-                                <small>Optional route for Layer 1+ merges.</small>
+                                <span>智能深度记忆</span>
+                                <small>Layer 1+ 合并的可选路由。</small>
                             </label>
                             <select id="sc_easy_merge_connection_source" class="text_pole">
-                                <option value="inherit">Inherit Fast Summarizer</option>
-                                <option value="profile">Connection Profile</option>
+                                <option value="inherit">继承快速摘要器</option>
+                                <option value="profile">连接档案</option>
                             </select>
                         </div>
                     </div>
                     <div id="sc_easy_profile_settings" class="sc-sub-panel" style="display: none;">
                         <div class="sc-setting-row">
                             <label for="sc_easy_connection_profile">
-                                <span>Fast Summarizer Profile</span>
+                                <span>快速摘要器档案</span>
                             </label>
                             <select id="sc_easy_connection_profile" class="text_pole">
-                                <option value="">-- Select a Profile --</option>
+                                <option value="">-- 选择档案 --</option>
                             </select>
                         </div>
                     </div>
                     <div id="sc_easy_merge_profile_settings" class="sc-sub-panel" style="display: none;">
                         <div class="sc-setting-row">
                             <label for="sc_easy_merge_connection_profile">
-                                <span>Smart Deep Memory Profile</span>
+                                <span>智能深度记忆档案</span>
                             </label>
                             <select id="sc_easy_merge_connection_profile" class="text_pole">
-                                <option value="">-- Select a Profile --</option>
+                                <option value="">-- 选择档案 --</option>
                             </select>
                         </div>
                     </div>
@@ -110,15 +110,15 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-shield-halved"></span>
-                            Context Limits
+                            上下文上限
                         </h4>
                     </div>
                     <div class="sc-tuning-grid">
                         <div class="sc-tuning-group">
                             <div class="sc-row">
                                 <label for="sc_easy_summarizer_context">
-                                    <span>Summarizer Context</span>
-                                    <small class="sc-hint">The context window the summary model sees per call.</small>
+                                    <span>摘要器上下文</span>
+                                    <small class="sc-hint">每次调用时摘要模型可见的上下文窗口。</small>
                                 </label>
                                 <div class="sc-slider-row">
                                     <input type="range" id="sc_easy_summarizer_context" min="8000" max="64000" step="1000" data-sc-slider-setting="easySummarizerContextTokens" data-sc-partner-input="#sc_easy_summarizer_context_val" />
@@ -127,8 +127,8 @@
                             </div>
                             <div class="sc-row">
                                 <label for="sc_easy_memory_token_budget">
-                                    <span>Injected Memory</span>
-                                    <small class="sc-hint">The most Summaryception memory added to your main chat prompt.</small>
+                                    <span>注入记忆</span>
+                                    <small class="sc-hint">添加到主对话提示词中的 Summaryception 记忆上限。</small>
                                 </label>
                                 <div class="sc-slider-row">
                                     <input type="range" id="sc_easy_memory_token_budget" min="4000" max="16000" step="1000" data-sc-slider-setting="easyMemoryTokenBudget" data-sc-partner-input="#sc_easy_memory_token_budget_val" />
@@ -139,22 +139,22 @@
                         <div class="sc-tuning-group">
                             <div class="sc-tuning-title">
                                 <span class="fa-solid fa-clock-rotate-left"></span>
-                                <span>Memory Style</span>
+                                <span>记忆风格</span>
                             </div>
-                            <div class="sc-radio-grid" role="radiogroup" aria-label="Easy Memory Style">
+                            <div class="sc-radio-grid" role="radiogroup" aria-label="简易记忆风格">
                                 <label class="checkbox_label sc-toggle-row" for="sc_easy_memory_mode_standard">
                                     <span class="sc-toggle-icon fa-solid fa-layer-group"></span>
                                     <span class="sc-toggle-copy">
-                                        <span class="sc-toggle-title">Standard</span>
-                                        <small class="sc-hint">Summarizes overflow continuously, which keeps the main prompt smaller and steadier.</small>
+                                        <span class="sc-toggle-title">标准</span>
+                                        <small class="sc-hint">持续摘要溢出内容，使主提示词更小更稳定。</small>
                                     </span>
                                     <input type="radio" id="sc_easy_memory_mode_standard" name="sc_easy_memory_mode" value="standard" />
                                 </label>
                                 <label class="checkbox_label sc-toggle-row" for="sc_easy_memory_mode_cache">
                                     <span class="sc-toggle-icon fa-solid fa-box-archive"></span>
                                     <span class="sc-toggle-copy">
-                                        <span class="sc-toggle-title">Cache Friendly</span>
-                                        <small class="sc-hint">Uses a larger 32k live window, which pays off on providers that discount cached input.</small>
+                                        <span class="sc-toggle-title">缓存友好</span>
+                                        <small class="sc-hint">使用更大的 32k 实时窗口，在缓存输入有折扣的提供商上更划算。</small>
                                     </span>
                                     <input type="radio" id="sc_easy_memory_mode_cache" name="sc_easy_memory_mode" value="cache" />
                                 </label>
@@ -166,98 +166,98 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-chart-pie"></span>
-                            Context Payload
+                            上下文负载
                         </h4>
                     </div>
-                    <div class="sc-payload-rail" aria-label="Easy context payload order">
+                    <div class="sc-payload-rail" aria-label="简易上下文负载顺序">
                         <div class="sc-payload-part sc-payload-part-source">
                             <span class="fa-solid fa-terminal"></span>
-                            <span>ST Context</span>
+                            <span>ST 上下文</span>
                         </div>
                         <span class="sc-payload-arrow fa-solid fa-arrow-right" aria-hidden="true"></span>
                         <div class="sc-payload-part">
                             <span class="fa-solid fa-layer-group"></span>
-                            <span>Memory</span>
+                            <span>记忆</span>
                             <strong id="sc_easy_payload_memory_budget">0</strong>
                         </div>
                         <span class="sc-payload-arrow fa-solid fa-arrow-right" aria-hidden="true"></span>
                         <div class="sc-payload-part">
                             <span class="fa-solid fa-message"></span>
-                            <span>Verbatim</span>
+                            <span>逐字</span>
                             <strong id="sc_easy_payload_verbatim_budget">0</strong>
                         </div>
                     </div>
                     <div class="sc-section-header sc-budget-subheader">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-layer-group"></span>
-                            Injected Memory
+                            注入记忆
                         </h4>
                         <span id="sc_easy_memory_budget_total" class="sc-context-total">0 / 0</span>
                     </div>
-                    <div id="sc_easy_memory_budget_bar" class="sc-context-bar" aria-label="Easy injected memory token usage"></div>
+                    <div id="sc_easy_memory_budget_bar" class="sc-context-bar" aria-label="简易注入记忆 token 用量"></div>
                     <div id="sc_easy_memory_budget_legend" class="sc-context-legend"></div>
                 </section>
                 <section class="sc-section">
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-bolt"></span>
-                            Operations
+                            操作
                         </h4>
                     </div>
                     <div class="sc-button-row sc-action-row">
-                        <button id="sc_easy_force_summarize" class="menu_button" title="Summarize backlog outside the verbatim window. Keeps recent chat live.">
+                        <button id="sc_easy_force_summarize" class="menu_button" title="摘要逐字窗口之外积压的对话。保持近期对话为实时状态。">
                             <i class="fa-solid fa-bolt"></i>
-                            <span>Force Summarize</span>
+                            <span>强制摘要</span>
                         </button>
-                        <button id="sc_easy_slop_breaker" class="menu_button" title="Summarize the live context too. Use when the AI is stuck repeating patterns.">
+                        <button id="sc_easy_slop_breaker" class="menu_button" title="也摘要实时上下文。当 AI 卡在重复模式时使用。">
                             <i class="fa-solid fa-broom"></i>
-                            <span>Slop Breaker</span>
+                            <span>失控清理</span>
                         </button>
                         <button id="sc_easy_stop_summarize" class="menu_button menu_button_danger">
                             <i class="fa-solid fa-stop"></i>
-                            <span>Stop</span>
+                            <span>停止</span>
                         </button>
-                        <button id="sc_easy_resume_summarize" class="menu_button" style="display: none;" title="Resume automatic summarization after Stop.">
+                        <button id="sc_easy_resume_summarize" class="menu_button" style="display: none;" title="停止后恢复自动摘要。">
                             <i class="fa-solid fa-play"></i>
-                            <span>Resume</span>
+                            <span>继续</span>
                         </button>
                     </div>
                 </section>
             </div>
             <div id="sc_enabled_content">
-            <div class="sc-console-header" aria-label="Summaryception status">
-                <span id="sc_status_enabled" class="sc-console-value">Disabled</span>
+            <div class="sc-console-header" aria-label="Summaryception 状态">
+                <span id="sc_status_enabled" class="sc-console-value">已禁用</span>
                 <span class="sc-status-separator" aria-hidden="true">·</span>
-                <span id="sc_status_worker" class="sc-console-value">Idle</span>
+                <span id="sc_status_worker" class="sc-console-value">空闲</span>
                 <span class="sc-status-separator" aria-hidden="true">·</span>
-                <span class="sc-console-value"><strong id="sc_status_snippets">0</strong> snippets</span>
+                <span class="sc-console-value"><strong id="sc_status_snippets">0</strong> 个摘要片段</span>
                 <span class="sc-status-separator" aria-hidden="true">·</span>
-                <span class="sc-console-value"><strong id="sc_status_ghosted">0</strong> ghosted</span>
+                <span class="sc-console-value"><strong id="sc_status_ghosted">0</strong> 已隐藏</span>
             </div>
-            <div class="sc-tab-list" role="tablist" aria-label="Summaryception settings">
+            <div class="sc-tab-list" role="tablist" aria-label="Summaryception 设置">
                 <button class="sc-tab-button active" type="button" role="tab" aria-selected="true" data-sc-tab="status">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Status</span>
+                    <span>状态</span>
                 </button>
                 <button class="sc-tab-button" type="button" role="tab" aria-selected="false" data-sc-tab="memory">
                     <i class="fa-solid fa-chart-simple"></i>
-                    <span>Memory</span>
+                    <span>记忆</span>
                 </button>
                 <button class="sc-tab-button" type="button" role="tab" aria-selected="false" data-sc-tab="models">
                     <i class="fa-solid fa-plug"></i>
-                    <span>Models</span>
+                    <span>模型</span>
                 </button>
                 <button class="sc-tab-button" type="button" role="tab" aria-selected="false" data-sc-tab="settings">
                     <i class="fa-solid fa-sliders"></i>
-                    <span>Settings</span>
+                    <span>设置</span>
                 </button>
                 <button class="sc-tab-button" type="button" role="tab" aria-selected="false" data-sc-tab="prompts">
                     <i class="fa-solid fa-pen-to-square"></i>
-                    <span>Prompts</span>
+                    <span>提示词</span>
                 </button>
                 <button class="sc-tab-button" type="button" role="tab" aria-selected="false" data-sc-tab="diagnostics">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
-                    <span>Tools</span>
+                    <span>工具</span>
                 </button>
             </div>
             <div class="sc-tab-panel active" role="tabpanel" data-sc-panel="status">
@@ -265,59 +265,59 @@
                     <div class="sc-section-header sc-budget-subheader">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-message"></span>
-                            Verbatim Window
+                            逐字窗口
                         </h4>
                         <span id="sc_verbatim_budget_total" class="sc-context-total">0 / 0</span>
                     </div>
-                    <div id="sc_verbatim_budget_bar" class="sc-context-bar" aria-label="Verbatim window token usage"></div>
+                    <div id="sc_verbatim_budget_bar" class="sc-context-bar" aria-label="逐字窗口 token 用量"></div>
                     <div id="sc_verbatim_budget_legend" class="sc-context-legend"></div>
                     <div class="sc-section-header sc-budget-subheader">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-gauge-high"></span>
-                            Queued &rarr; Trigger
+                            已排队 &rarr; 触发点
                         </h4>
                         <span id="sc_trigger_budget_total" class="sc-context-total">0 / 0</span>
                     </div>
-                    <div id="sc_trigger_budget_bar" class="sc-context-bar" aria-label="Queued tokens toward summarization trigger"></div>
+                    <div id="sc_trigger_budget_bar" class="sc-context-bar" aria-label="向摘要触发点累积的已排队 token"></div>
                     <div id="sc_trigger_budget_legend" class="sc-context-legend"></div>
                     <div class="sc-section-header sc-budget-subheader">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-layer-group"></span>
-                            Memory Block
+                            记忆块
                         </h4>
                         <span id="sc_memory_budget_total" class="sc-context-total">0 / 0</span>
                     </div>
-                    <div id="sc_memory_budget_bar" class="sc-context-bar" aria-label="Memory block token usage"></div>
+                    <div id="sc_memory_budget_bar" class="sc-context-bar" aria-label="记忆块 token 用量"></div>
                     <div id="sc_memory_budget_legend" class="sc-context-legend"></div>
                 </section>
                 <section class="sc-section">
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-bolt"></span>
-                            Operations
+                            操作
                         </h4>
                     </div>
                     <div class="sc-button-row sc-action-row">
-                        <button id="sc_force_summarize" class="menu_button" title="Summarize backlog outside the verbatim window. Keeps recent chat live." aria-label="Force Summarize: summarize backlog outside the verbatim window. Keeps recent chat live.">
+                        <button id="sc_force_summarize" class="menu_button" title="摘要逐字窗口之外积压的对话。保持近期对话为实时状态。" aria-label="强制摘要：摘要逐字窗口之外积压的对话。保持近期对话为实时状态。">
                             <i class="fa-solid fa-bolt"></i>
-                            <span>Force Summarize</span>
+                            <span>强制摘要</span>
                         </button>
-                        <button id="sc_slop_breaker" class="menu_button" title="Summarize the live context too. Use when the AI is stuck repeating patterns." aria-label="Slop Breaker: summarize the live context too. Use when the AI is stuck repeating patterns.">
+                        <button id="sc_slop_breaker" class="menu_button" title="失控清理（Slop Breaker）：也摘要实时上下文。当 AI 卡在重复模式时使用。" aria-label="失控清理（Slop Breaker）：也摘要实时上下文。当 AI 卡在重复模式时使用。">
                             <i class="fa-solid fa-broom"></i>
-                            <span>Slop Breaker</span>
+                            <span>失控清理</span>
                         </button>
                         <button id="sc_stop_summarize" class="menu_button menu_button_danger">
                             <i class="fa-solid fa-stop"></i>
-                            <span>Stop</span>
+                            <span>停止</span>
                         </button>
-                        <button id="sc_resume_summarize" class="menu_button" style="display: none;" title="Resume automatic summarization after Stop.">
+                        <button id="sc_resume_summarize" class="menu_button" style="display: none;" title="停止后恢复自动摘要。">
                             <i class="fa-solid fa-play"></i>
-                            <span>Resume</span>
+                            <span>继续</span>
                         </button>
                     </div>
                     <div id="sc_manual_cache_warning" class="sc-note" style="display: none;">
                         <span class="fa-solid fa-circle-info"></span>
-                        <small>Manual summarization updates memory immediately and may reset cache savings for the next request.</small>
+                        <small>手动摘要会立即更新记忆，并可能使下一次请求的缓存节省失效。</small>
                     </div>
                 </section>
             </div>
@@ -326,17 +326,17 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-chart-simple"></span>
-                            Memory
+                            记忆
                         </h4>
                     </div>
                     <div class="sc-memory-grid">
                         <div id="sc_layer_stats" class="sc-stats-box"></div>
                         <div>
                             <div class="sc-field-header">
-                                <label for="sc_preview">Injection Preview</label>
+                                <label for="sc_preview">注入预览</label>
                                 <div class="sc-field-actions">
-                                    <span id="sc_preview_token_count" class="sc-context-total">0 tokens</span>
-                                    <button id="sc_refresh_preview" class="menu_button sc-icon-button" title="Refresh preview">
+                                    <span id="sc_preview_token_count" class="sc-context-total">0 token</span>
+                                    <button id="sc_refresh_preview" class="menu_button sc-icon-button" title="刷新预览">
                                         <i class="fa-solid fa-rotate"></i>
                                     </button>
                                 </div>
@@ -347,11 +347,11 @@
                     <div class="sc-button-row sc-memory-actions">
                         <button id="sc_import" class="menu_button">
                            <i class="fa-solid fa-download"></i>
-                           <span>Import</span>
+                           <span>导入</span>
                         </button>
                         <button id="sc_export" class="menu_button">
                             <i class="fa-solid fa-upload"></i>
-                            <span>Export</span>
+                            <span>导出</span>
                         </button>
                     </div>
                 </section>
@@ -359,7 +359,7 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-layer-group"></span>
-                            Snippets
+                            摘要片段
                         </h4>
                     </div>
                     <div id="sc_snippet_browser" class="sc-snippet-browser"></div>
@@ -370,31 +370,31 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-plug"></span>
-                            Layer 0 Summarizer Connection
+                            Layer 0 摘要器连接
                         </h4>
                     </div>
-                    <small class="sc-help-text">Used for raw chat to Layer 0 summaries and Layer 0 regeneration.</small>
+                    <small class="sc-help-text">用于将原始对话生成为 Layer 0 摘要，以及 Layer 0 重新生成。</small>
                     <div class="sc-settings-grid sc-connection-grid">
                     <div class="sc-setting-row">
                         <label for="summaryception_connection_source">
-                            <span>Layer 0 Source</span>
+                            <span>Layer 0 来源</span>
                         </label>
                         <select id="summaryception_connection_source" class="text_pole">
-                            <option value="default">Default (Main API)</option>
-                            <option value="profile">Connection Profile</option>
+                            <option value="default">默认（主 API）</option>
+                            <option value="profile">连接档案</option>
                         </select>
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_summarizer_response_length">
-                            <span>Layer 0 Response Length</span>
-                            <small>0 uses the selected provider default. Use a positive value only when you need an explicit cap.</small>
+                            <span>Layer 0 回复长度</span>
+                            <small>0 表示使用所选提供商的默认值。仅在需要显式上限时使用正值。</small>
                         </label>
-                        <input id="sc_summarizer_response_length" type="number" class="text_pole" min="0" step="100" value="0" placeholder="0 = provider default" />
+                        <input id="sc_summarizer_response_length" type="number" class="text_pole" min="0" step="100" value="0" placeholder="0 = 提供商默认值" />
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_request_timeout">
-                            <span>Request Timeout</span>
-                            <small>Per-attempt timeout for Layer 0 summary and regeneration calls. Raise this for slow local models.</small>
+                            <span>请求超时</span>
+                            <small>Layer 0 摘要与重新生成调用每次尝试的超时时间。本地模型较慢时可调高。</small>
                         </label>
                         <div class="sc-slider-row">
                             <input type="range" id="sc_request_timeout" min="60" max="300" step="10" data-sc-slider-setting="requestTimeoutSeconds" data-sc-partner-input="#sc_request_timeout_val" />
@@ -405,47 +405,47 @@
                     <div id="summaryception_profile_settings" class="sc-sub-panel" style="display: none;">
                         <div class="sc-setting-row">
                             <label for="summaryception_connection_profile">
-                                <span>Connection Profile</span>
+                                <span>连接档案</span>
                             </label>
                             <select id="summaryception_connection_profile" class="text_pole">
-                                <option value="">-- Select a Profile --</option>
+                                <option value="">-- 选择档案 --</option>
                             </select>
                         </div>
                         <div class="sc-note">
                             <span class="fa-solid fa-circle-info"></span>
-                            <small>Uses a saved SillyTavern Connection Profile. Profile formatting can affect summary quality.</small>
+                            <small>使用已保存的 SillyTavern 连接档案。档案格式可能影响摘要质量。</small>
                         </div>
                     </div>
                     <div class="sc-tier-divider"></div>
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-code-merge"></span>
-                            Layer 1+ Merge Connection
+                            Layer 1+ 合并连接
                         </h4>
                     </div>
-                    <small class="sc-help-text">Optional smarter connection for promotion merges. Inherit keeps existing behavior.</small>
+                    <small class="sc-help-text">用于提升合并的可选更智能连接。继承保持现有行为。</small>
                     <div class="sc-settings-grid sc-connection-grid">
                     <div class="sc-setting-row">
                         <label for="summaryception_merge_connection_source">
-                            <span>Merge Source</span>
+                            <span>合并来源</span>
                         </label>
                         <select id="summaryception_merge_connection_source" class="text_pole">
-                            <option value="inherit">Inherit Layer 0</option>
-                            <option value="default">Default (Main API)</option>
-                            <option value="profile">Connection Profile</option>
+                            <option value="inherit">继承 Layer 0</option>
+                            <option value="default">默认（主 API）</option>
+                            <option value="profile">连接档案</option>
                         </select>
                     </div>
                     <div id="summaryception_merge_response_length_row" class="sc-setting-row" style="display: none;">
                         <label for="sc_merge_summarizer_response_length">
-                            <span>Merge Response Length</span>
-                            <small>0 uses the selected provider default. Used by Default/Profile sources.</small>
+                            <span>合并回复长度</span>
+                            <small>0 表示使用所选提供商的默认值。用于默认/档案来源。</small>
                         </label>
-                        <input id="sc_merge_summarizer_response_length" type="number" class="text_pole" min="0" step="100" value="0" placeholder="0 = use provider default" data-sc-setting="mergeSummarizerResponseLength" data-sc-type="number" data-sc-fallback="0" />
+                        <input id="sc_merge_summarizer_response_length" type="number" class="text_pole" min="0" step="100" value="0" placeholder="0 = 使用提供商默认值" data-sc-setting="mergeSummarizerResponseLength" data-sc-type="number" data-sc-fallback="0" />
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_merge_request_timeout">
-                            <span>Merge Request Timeout</span>
-                            <small>Per-attempt timeout for Layer 1+ promotion merge calls. Lower than Layer 0 by default.</small>
+                            <span>合并请求超时</span>
+                            <small>Layer 1+ 提升合并调用每次尝试的超时时间。默认低于 Layer 0。</small>
                         </label>
                         <div class="sc-slider-row">
                             <input type="range" id="sc_merge_request_timeout" min="60" max="300" step="10" data-sc-slider-setting="mergeRequestTimeoutSeconds" data-sc-partner-input="#sc_merge_request_timeout_val" />
@@ -456,47 +456,47 @@
                     <div id="summaryception_merge_profile_settings" class="sc-sub-panel" style="display: none;">
                         <div class="sc-setting-row">
                             <label for="summaryception_merge_connection_profile">
-                                <span>Merge Connection Profile</span>
+                                <span>合并连接档案</span>
                             </label>
                             <select id="summaryception_merge_connection_profile" class="text_pole">
-                                <option value="">-- Select a Profile --</option>
+                                <option value="">-- 选择档案 --</option>
                             </select>
                         </div>
                         <div class="sc-note">
                             <span class="fa-solid fa-circle-info"></span>
-                            <small>Uses a saved SillyTavern Connection Profile only for Layer 1+ merge calls.</small>
+                            <small>仅对 Layer 1+ 合并调用使用已保存的 SillyTavern 连接档案。</small>
                         </div>
                     </div>
                     <div class="sc-tier-divider"></div>
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-shield-halved"></span>
-                            Fallback Connection
+                            回退连接
                         </h4>
                     </div>
-                    <small class="sc-help-text">Optional failover after the primary route exhausts retryable errors.</small>
+                    <small class="sc-help-text">主路由重试错误用尽后的可选故障转移。</small>
                     <div class="sc-settings-grid sc-connection-grid">
                     <div class="sc-setting-row">
                         <label for="summaryception_fallback_connection_source">
-                            <span>Fallback Source</span>
+                            <span>回退来源</span>
                         </label>
                         <select id="summaryception_fallback_connection_source" class="text_pole">
-                            <option value="disabled">Disabled</option>
-                            <option value="default">Default (Main API)</option>
-                            <option value="profile">Connection Profile</option>
+                            <option value="disabled">已禁用</option>
+                            <option value="default">默认（主 API）</option>
+                            <option value="profile">连接档案</option>
                         </select>
                     </div>
                     <div id="summaryception_fallback_response_length_row" class="sc-setting-row" style="display: none;">
                         <label for="sc_fallback_summarizer_response_length">
-                            <span>Fallback Response Length</span>
-                            <small>0 uses the selected provider default. Used by Default/Profile sources.</small>
+                            <span>回退回复长度</span>
+                            <small>0 表示使用所选提供商的默认值。用于默认/档案来源。</small>
                         </label>
-                        <input id="sc_fallback_summarizer_response_length" type="number" class="text_pole" min="0" step="100" value="0" placeholder="0 = use provider default" data-sc-setting="fallbackSummarizerResponseLength" data-sc-type="number" data-sc-fallback="0" />
+                        <input id="sc_fallback_summarizer_response_length" type="number" class="text_pole" min="0" step="100" value="0" placeholder="0 = 使用提供商默认值" data-sc-setting="fallbackSummarizerResponseLength" data-sc-type="number" data-sc-fallback="0" />
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_fallback_request_timeout">
-                            <span>Fallback Request Timeout</span>
-                            <small>Per-attempt timeout for the fallback route after the primary route fails.</small>
+                            <span>回退请求超时</span>
+                            <small>主路由失败后，回退路由每次尝试的超时时间。</small>
                         </label>
                         <div class="sc-slider-row">
                             <input type="range" id="sc_fallback_request_timeout" min="60" max="300" step="10" data-sc-slider-setting="fallbackRequestTimeoutSeconds" data-sc-partner-input="#sc_fallback_request_timeout_val" />
@@ -507,10 +507,10 @@
                     <div id="summaryception_fallback_profile_settings" class="sc-sub-panel" style="display: none;">
                         <div class="sc-setting-row">
                             <label for="summaryception_fallback_connection_profile">
-                                <span>Fallback Connection Profile</span>
+                                <span>回退连接档案</span>
                             </label>
                             <select id="summaryception_fallback_connection_profile" class="text_pole">
-                                <option value="">-- Select a Profile --</option>
+                                <option value="">-- 选择档案 --</option>
                             </select>
                         </div>
                     </div>
@@ -521,24 +521,24 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-clock-rotate-left"></span>
-                            Memory Mode
+                            记忆模式
                         </h4>
                     </div>
                     <div class="sc-row sc-memory-mode-row">
-                        <div class="sc-mode-grid" role="radiogroup" aria-label="Memory Mode">
+                        <div class="sc-mode-grid" role="radiogroup" aria-label="记忆模式">
                             <label class="checkbox_label sc-mode-card" for="sc_memory_mode_standard">
                                 <span class="sc-toggle-icon fa-solid fa-layer-group"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Standard</span>
-                                <small class="sc-hint">Summarizes overflow continuously, which keeps the main prompt smaller and steadier.</small>
+                                    <span class="sc-toggle-title">标准</span>
+                                <small class="sc-hint">持续摘要溢出内容，使主提示词更小更稳定。</small>
                                 </span>
                                 <input type="radio" id="sc_memory_mode_standard" name="sc_memory_mode" value="standard" />
                             </label>
                             <label class="checkbox_label sc-mode-card" for="sc_memory_mode_cache">
                                 <span class="sc-toggle-icon fa-solid fa-box-archive"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Cache Friendly</span>
-                                <small class="sc-hint">Uses a larger 32k live window, which pays off on providers that discount cached input.</small>
+                                    <span class="sc-toggle-title">缓存友好</span>
+                                <small class="sc-hint">使用更大的 32k 实时窗口，在缓存输入有折扣的提供商上更划算。</small>
                                 </span>
                                 <input type="radio" id="sc_memory_mode_cache" name="sc_memory_mode" value="cache" />
                             </label>
@@ -546,64 +546,64 @@
                     </div>
                     <div id="sc_memory_help_standard" class="sc-note">
                         <span class="fa-solid fa-circle-info"></span>
-                        <small>Standard keeps raw chat near the live window by summarizing overflow continuously. It avoids large context spikes and usually gives steadier quality when prompt caching is unavailable or weak.</small>
+                        <small>标准模式通过持续摘要溢出内容，让原始对话贴近实时窗口。它避免大的上下文波动，在提示词缓存不可用或较弱时通常能获得更稳定的质量。</small>
                     </div>
                     <div id="sc_memory_help_cache" class="sc-note" style="display: none;">
                         <span class="fa-solid fa-circle-info"></span>
-                        <small>Cache Friendly freezes the memory prefix and lets live chat grow to a 32k budget, protecting a 4k-8k tail and flushing older chat in one commit. On cached-input providers this is much cheaper per turn, but total context is larger (memory + 32k).</small>
+                        <small>缓存友好模式冻结记忆前缀，让实时对话增长到 32k 预算，保护 4k-8k 的尾部，并在一次提交中冲刷较旧的对话。在缓存输入提供商上，每回合成本低得多，但总上下文更大（记忆 + 32k）。</small>
                     </div>
                 </section>
                 <section class="sc-section">
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-code"></span>
-                            Input Processing
+                            输入处理
                         </h4>
                     </div>
                     <div class="sc-toggle-list">
                         <label class="checkbox_label sc-toggle-row" for="sc_apply_regex_scripts">
                             <span class="sc-toggle-icon fa-solid fa-code"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Apply Regex Scripts</span>
-                                <small class="sc-hint">Apply regexes against the text the RP model actually sees.</small>
+                                <span class="sc-toggle-title">应用正则脚本</span>
+                                <small class="sc-hint">对角色扮演模型实际看到的文本应用正则。</small>
                             </span>
                             <input type="checkbox" id="sc_apply_regex_scripts" />
                         </label>
                         <label class="checkbox_label sc-toggle-row" for="sc_hide_non_text_messages">
                             <span class="sc-toggle-icon fa-solid fa-image"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Hide Non-Text Messages</span>
-                                <small class="sc-hint">Also hides images, tool calls and other text-less messages inside the summarized range, so they stop costing context. On by default; turn off to keep text-less messages visible to the model.</small>
+                                <span class="sc-toggle-title">隐藏非文本消息</span>
+                                <small class="sc-hint">同时隐藏摘要范围内无文本的消息（图片、工具调用等），使它们不再占用上下文。默认开启；关闭则让无文本消息对模型可见。</small>
                             </span>
                             <input type="checkbox" id="sc_hide_non_text_messages" />
                         </label>
                         <label class="checkbox_label sc-toggle-row" for="sc_strip_chinese_ideographs">
                             <span class="sc-toggle-icon fa-solid fa-language"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Strip CN</span>
-                                <small class="sc-hint">Strips Han ideographs from the summarizer's replies.</small>
+                                <span class="sc-toggle-title">去除汉字</span>
+                                <small class="sc-hint">从摘要器的回复中去除汉字。</small>
                             </span>
                             <input type="checkbox" id="sc_strip_chinese_ideographs" />
                         </label>
                         <label class="checkbox_label sc-toggle-row" for="sc_mask_user_role_as_assistant">
                             <span class="sc-toggle-icon fa-solid fa-user-secret"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Mask User Role</span>
-                                <small class="sc-hint">Send your turns as the AI's own words so the model stops treating your character like someone it has to protect.</small>
+                                <span class="sc-toggle-title">掩码用户角色</span>
+                                <small class="sc-hint">把你的回合作为 AI 自己的话发送，让模型不再把你的角色当作需要保护的人。</small>
                             </span>
                             <input type="checkbox" id="sc_mask_user_role_as_assistant" />
                         </label>
                         <div id="sc_mask_user_role_mode_row" class="sc-sub-panel" style="display: none;">
                             <div class="sc-setting-row">
                                 <label for="sc_mask_user_role_mode">
-                                    <span>Compatibility mode</span>
-                                    <small class="sc-hint">Some providers reject a request with no user message, so the marker modes add one throwaway user line. Keep-last is for when another extension (like Rabbit-Response-Team) already injects its instruction as your final user turn.</small>
+                                    <span>兼容模式</span>
+                                    <small class="sc-hint">某些提供商拒绝没有用户消息的请求，因此标记模式会添加一条临时用户行。"保留最后一条"用于另一个扩展（如 Rabbit-Response-Team）已把你的最终用户回合作为指令注入的情况。</small>
                                 </label>
                                 <select id="sc_mask_user_role_mode" class="text_pole" disabled>
-                                    <option value="marker_first">Marker first (for APIs that need a user message)</option>
-                                    <option value="rewrite_all">No marker — every turn becomes the AI</option>
-                                    <option value="marker_last">Marker last (for APIs that need a user message)</option>
-                                    <option value="keep_last_user">Keep my final message as user</option>
+                                    <option value="marker_first">先标记（适用于需要用户消息的 API）</option>
+                                    <option value="rewrite_all">无标记——每个回合都变成 AI</option>
+                                    <option value="marker_last">后标记（适用于需要用户消息的 API）</option>
+                                    <option value="keep_last_user">保留我最后一条消息为用户</option>
                                 </select>
                             </div>
                         </div>
@@ -613,35 +613,35 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-microchip"></span>
-                            LLM Call Context
+                            LLM 调用上下文
                         </h4>
                     </div>
                     <div class="sc-llm-context-grid">
                         <div class="sc-llm-context-row sc-llm-context-row-wide">
-                            <span class="sc-llm-context-label">Main Chat Call</span>
+                            <span class="sc-llm-context-label">主对话调用</span>
                             <span class="sc-llm-context-actions">
                                 <span class="sc-llm-context-value" id="sc_llm_context_main">~26k + ST prompt</span>
-                                <button id="sc_estimate_main_context" class="menu_button sc-icon-button sc-llm-context-button" title="Estimate current SillyTavern prompt" aria-label="Estimate current SillyTavern prompt" type="button">
+                                <button id="sc_estimate_main_context" class="menu_button sc-icon-button sc-llm-context-button" title="估算当前 SillyTavern 提示词" aria-label="估算当前 SillyTavern 提示词" type="button">
                                     <i class="fa-solid fa-calculator"></i>
                                 </button>
                             </span>
                         </div>
                         <div class="sc-llm-context-row">
-                            <span class="sc-llm-context-label">L0 Call</span>
-                            <span class="sc-llm-context-value" id="sc_llm_context_l0">~10k tokens</span>
+                            <span class="sc-llm-context-label">L0 调用</span>
+                            <span class="sc-llm-context-value" id="sc_llm_context_l0">~10k token</span>
                         </div>
                         <div class="sc-llm-context-row">
-                            <span class="sc-llm-context-label">L1+ Merge Call</span>
-                            <span class="sc-llm-context-value" id="sc_llm_context_l1">~1k tokens</span>
+                            <span class="sc-llm-context-label">L1+ 合并调用</span>
+                            <span class="sc-llm-context-value" id="sc_llm_context_l1">~1k token</span>
                         </div>
                     </div>
-                    <small class="sc-hint">Main call: memory plus live chat plus the ST prompt. L0 call: a raw chat batch plus the memory block plus prompt overhead. L1+ merge: stored summaries from deeper layers plus prompt overhead.</small>
+                    <small class="sc-hint">主调用：记忆 + 实时对话 + ST 提示词。L0 调用：原始对话批次 + 记忆块 + 提示词开销。L1+ 合并：深层存储的摘要 + 提示词开销。</small>
                 </section>
                 <section class="sc-section">
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-sliders"></span>
-                            Engine Tuning
+                            引擎调优
                         </h4>
                     </div>
                     <div class="sc-tuning-grid">
@@ -649,12 +649,12 @@
                             <div class="sc-tuning-group">
                                 <div class="sc-tuning-title">
                                     <span class="fa-solid fa-microchip"></span>
-                                    <span>Model Context</span>
+                                    <span>模型上下文</span>
                                 </div>
                                 <div class="sc-row">
                                     <label for="sc_advanced_model_context">
-                                        <span>Model context</span>
-                                        <small class="sc-hint">How much context your summarizer model can take. This auto-tunes the batch sizes below; override any of them in Expert Tuning.</small>
+                                        <span>模型上下文</span>
+                                        <small class="sc-hint">你的摘要模型可容纳的上下文量。这会自动调整下方各批次大小；可在专家调优中覆盖其中任意项。</small>
                                     </label>
                                     <div class="sc-slider-row">
                                         <input type="range" id="sc_advanced_model_context" min="8000" max="64000" step="1000" data-sc-slider-setting="advancedModelContext" data-sc-partner-input="#sc_advanced_model_context_val" />
@@ -667,12 +667,12 @@
                             <div class="sc-tuning-group">
                                 <div class="sc-tuning-title">
                                     <span class="fa-solid fa-layer-group"></span>
-                                    <span>Memory Structure</span>
+                                    <span>记忆结构</span>
                                 </div>
                                 <div class="sc-row">
                                     <label for="sc_verbatim_token_budget">
-                                        <span>Live Chat Window</span>
-                                        <small class="sc-hint">How many recent messages stay raw before the extension compresses them into memory.</small>
+                                        <span>实时对话窗口</span>
+                                        <small class="sc-hint">扩展将它们压缩为记忆之前，保留多少条近期消息为原始状态。</small>
                                     </label>
                                     <div class="sc-slider-row">
                                         <input type="range" id="sc_verbatim_token_budget" min="4000" max="64000" step="1000" data-sc-slider-setting="verbatimTokenBudget" data-sc-partner-input="#sc_verbatim_token_budget_val" />
@@ -681,8 +681,8 @@
                                 </div>
                                 <div class="sc-row">
                                     <label for="sc_memory_token_budget">
-                                        <span>Memory Size Limit</span>
-                                        <small class="sc-hint">Total size of all summaries sent as Summaryception memory. Bigger means more of the back-story you actually remember.</small>
+                                        <span>记忆大小上限</span>
+                                        <small class="sc-hint">作为 Summaryception 记忆发送的所有摘要的总大小。越大代表你能记住的背景故事越多。</small>
                                     </label>
                                     <div class="sc-slider-row">
                                         <input type="range" id="sc_memory_token_budget" min="4000" max="32000" step="1000" data-sc-slider-setting="memoryTokenBudget" data-sc-partner-input="#sc_memory_token_budget_val" />
@@ -695,20 +695,20 @@
                     <details class="sc-expert-tuning">
                         <summary>
                             <span class="fa-solid fa-screwdriver-wrench"></span>
-                            <span>Expert Tuning</span>
+                            <span>专家调优</span>
                         </summary>
                         <div class="sc-tuning-grid">
                             <div class="sc-tuning-column">
                                 <div class="sc-tuning-group">
                                     <div class="sc-tuning-title">
                                         <span class="fa-solid fa-microchip"></span>
-                                        <span>Summarizer Engine</span>
+                                        <span>摘要器引擎</span>
                                     </div>
-                                    <small class="sc-hint">These auto-set from Model context. Override any of them here.</small>
+                                    <small class="sc-hint">这些由"模型上下文"自动设置。可在此覆盖任意项。</small>
                                     <div class="sc-row">
                                         <label for="sc_max_l0_source_tokens">
-                                            <span>Max Source per Call</span>
-                                            <small class="sc-hint">Hard cap on raw chat sent to the LLM in one call. Lower it if your model has a small context window.</small>
+                                            <span>每次调用最大来源</span>
+                                            <small class="sc-hint">单次调用发送给 LLM 的原始对话硬上限。若你的模型上下文窗口较小可调低。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_max_l0_source_tokens" min="8000" max="64000" step="1000" data-sc-slider-setting="maxL0SourceTokens" data-sc-partner-input="#sc_max_l0_source_tokens_val" />
@@ -717,8 +717,8 @@
                                     </div>
                                     <div class="sc-row">
                                         <label for="sc_min_summary_budget">
-                                            <span>Batch Trigger Size</span>
-                                            <small id="sc_min_summary_budget_hint" class="sc-hint">How much chat to accumulate before compressing it. Bigger batches mean fewer LLM calls.</small>
+                                            <span>批次触发大小</span>
+                                            <small id="sc_min_summary_budget_hint" class="sc-hint">压缩前需积累多少对话。批次越大 LLM 调用越少。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_min_summary_budget" min="4000" max="32000" step="1000" data-sc-slider-setting="minSummaryBudget" data-sc-partner-input="#sc_min_summary_budget_val" />
@@ -727,8 +727,8 @@
                                     </div>
                                     <div class="sc-row">
                                         <label for="sc_layer0_summary_token_target">
-                                            <span>Narrative Target Size</span>
-                                            <small class="sc-hint">Target length for each new <code>[NARRATIVE]</code>. Rolling <code>[STATE]</code> has its own fixed 200-token target and 300-token ceiling.</small>
+                                            <span>叙事目标大小</span>
+                                            <small class="sc-hint">每条新 <code>[NARRATIVE]</code> 的目标长度。滚动 <code>[STATE]</code> 有自己固定的 200 token 目标和 300 token 上限。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_layer0_summary_token_target" min="80" max="500" step="10" data-sc-slider-setting="layer0SummaryTokenTarget" data-sc-partner-input="#sc_layer0_summary_token_target_val" />
@@ -741,12 +741,12 @@
                                 <div class="sc-tuning-group">
                                     <div class="sc-tuning-title">
                                         <span class="fa-solid fa-timeline"></span>
-                                        <span>Batch Readiness</span>
+                                        <span>批次就绪</span>
                                     </div>
                                     <div class="sc-row">
                                         <label for="sc_min_summary_turns">
-                                            <span>Min Turns per Batch</span>
-                                            <small class="sc-hint">Minimum assistant replies before a batch can compress, so it won't summarize too eagerly.</small>
+                                            <span>每批次最少回合</span>
+                                            <small class="sc-hint">批次可压缩前最少需要的助手回复数，避免过早摘要。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_min_summary_turns" min="2" max="10" step="1" data-sc-slider-setting="minSummaryTurns" data-sc-partner-input="#sc_min_summary_turns_val" />
@@ -755,8 +755,8 @@
                                     </div>
                                     <div class="sc-row">
                                         <label for="sc_max_summary_turns">
-                                            <span>Max Turns per Batch</span>
-                                            <small class="sc-hint">Most assistant replies packed into one batch, so batches don't grow too large.</small>
+                                            <span>每批次最多回合</span>
+                                            <small class="sc-hint">一个批次最多装入的助手回复数，避免批次过大。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_max_summary_turns" min="3" max="20" step="1" data-sc-slider-setting="maxSummaryTurns" data-sc-partner-input="#sc_max_summary_turns_val" />
@@ -767,12 +767,12 @@
                                 <div class="sc-tuning-group">
                                     <div class="sc-tuning-title">
                                         <span class="fa-solid fa-code-merge"></span>
-                                        <span>Layer Promotion</span>
+                                        <span>层级提升</span>
                                     </div>
                                     <div class="sc-row">
                                         <label for="sc_snippets_per_layer">
-                                            <span>Max Memories per Layer</span>
-                                            <small class="sc-hint">How many summaries each layer keeps before the oldest ones merge into deeper memory.</small>
+                                            <span>每层最多记忆</span>
+                                            <small class="sc-hint">每层保留多少条摘要，之后最旧的会合并进更深的记忆。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_snippets_per_layer" min="20" max="40" step="1" data-sc-slider-setting="snippetsPerLayer" data-sc-partner-input="#sc_snippets_per_layer_val" />
@@ -781,8 +781,8 @@
                                     </div>
                                     <div class="sc-row">
                                         <label for="sc_snippets_per_promotion">
-                                            <span>Memories per Merge</span>
-                                            <small class="sc-hint">How many summaries merge together in one pass when rolling up into deeper layers.</small>
+                                            <span>每次合并记忆数</span>
+                                            <small class="sc-hint">提升到更深层时，一次合并多少条摘要。</small>
                                         </label>
                                         <div class="sc-slider-row">
                                             <input type="range" id="sc_snippets_per_promotion" min="3" max="4" step="1" data-sc-slider-setting="snippetsPerPromotion" data-sc-partner-input="#sc_snippets_per_promotion_val" />
@@ -797,37 +797,37 @@
                         <div class="sc-section-header">
                             <h4 class="sc-section-title">
                                 <span class="fa-solid fa-location-dot"></span>
-                                Memory Position
+                                记忆位置
                             </h4>
                         </div>
                         <div id="sc_custom_memory_controls" class="sc-sub-panel sc-settings-grid">
                             <div class="sc-setting-row">
                                 <label for="sc_custom_memory_position">
-                                    <span>Memory Position</span>
-                                    <small class="sc-hint">Where Summaryception memory sits in the ST prompt.</small>
+                                    <span>记忆位置</span>
+                                    <small class="sc-hint">Summaryception 记忆在 ST 提示词中的位置。</small>
                                 </label>
                                 <select id="sc_custom_memory_position" class="text_pole">
-                                    <option value="before_prompt">Before Prompt</option>
-                                    <option value="in_prompt">In Prompt</option>
-                                    <option value="in_chat">In Chat</option>
-                                    <option value="macro_only">Macro Only</option>
+                                    <option value="before_prompt">提示词前</option>
+                                    <option value="in_prompt">提示词内</option>
+                                    <option value="in_chat">对话内</option>
+                                    <option value="macro_only">仅宏</option>
                                 </select>
                             </div>
                             <div id="sc_custom_memory_role_row" class="sc-setting-row">
                                 <label for="sc_custom_memory_role">
-                                    <span>Memory Role</span>
-                                    <small class="sc-hint">The message role your memory is injected as when you pick In Chat or In Prompt.</small>
+                                    <span>记忆角色</span>
+                                    <small class="sc-hint">选择"对话内"或"提示词内"时，记忆注入所使用的消息角色。</small>
                                 </label>
                                 <select id="sc_custom_memory_role" class="text_pole">
-                                    <option value="system">System</option>
-                                    <option value="user">User</option>
-                                    <option value="assistant">Assistant</option>
+                                    <option value="system">系统</option>
+                                    <option value="user">用户</option>
+                                    <option value="assistant">助手</option>
                                 </select>
                             </div>
                             <div id="sc_custom_memory_depth_row" class="sc-setting-row" style="display: none;">
                                 <label for="sc_custom_memory_depth">
-                                    <span>Chat Depth</span>
-                                    <small class="sc-hint">How many messages back memory is inserted when you pick In Chat.</small>
+                                    <span>对话深度</span>
+                                    <small class="sc-hint">选择"对话内"时，记忆插入到多少条消息之前。</small>
                                 </label>
                                 <input id="sc_custom_memory_depth" type="number" class="text_pole" min="0" max="10000" step="1" />
                             </div>
@@ -836,63 +836,63 @@
                             <label class="checkbox_label sc-toggle-row" for="sc_inject_current_state">
                                 <span class="sc-toggle-icon fa-solid fa-list-check"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Include [STATE]</span>
-                                    <small class="sc-hint">Prepend the active-facts snapshot block (<code>[CURRENT STATE]</code>) in what's injected into the prompt. Turn off to send only the <code>[CHRONOLOGY]</code> history and shrink the prompt.</small>
+                                    <span class="sc-toggle-title">包含 [STATE]</span>
+                                    <small class="sc-hint">在注入提示词的内容前附加活跃事实快照块（<code>[CURRENT STATE]</code>）。关闭则只发送 <code>[CHRONOLOGY]</code> 历史并缩小提示词。</small>
                                 </span>
                                 <input type="checkbox" id="sc_inject_current_state" />
                             </label>
                             <label class="checkbox_label sc-toggle-row" for="sc_state_cat_date_time">
                                 <span class="sc-toggle-icon fa-solid fa-clock"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Date & Time</span>
-                                    <small class="sc-hint">Time anchor carried across every snapshot. Always carried — cannot be toggled off.</small>
+                                    <span class="sc-toggle-title">日期与时间</span>
+                                    <small class="sc-hint">每次快照都会携带的时间锚点。始终携带——无法关闭。</small>
                                 </span>
                                 <input type="checkbox" id="sc_state_cat_date_time" disabled />
                             </label>
                             <label class="checkbox_label sc-toggle-row" for="sc_state_cat_bonds">
                                 <span class="sc-toggle-icon fa-solid fa-people-group"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Bonds (Relationships RPG)</span>
-                                    <small class="sc-hint">Persistent relationship engine: BOND/Sparks/Grudge per character pair.</small>
+                                    <span class="sc-toggle-title">羁绊（关系型 RPG）</span>
+                                    <small class="sc-hint">持久关系引擎：每对角色之间的 BOND/火花/怨恨。</small>
                                 </span>
                                 <input type="checkbox" id="sc_state_cat_bonds" />
                             </label>
                             <label class="checkbox_label sc-toggle-row" for="sc_state_cat_chekhov">
                                 <span class="sc-toggle-icon fa-solid fa-gun"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Chekhov (Narrative Gun)</span>
-                                    <small class="sc-hint">Aging narrative-debt bullets that fire probabilistically.</small>
+                                    <span class="sc-toggle-title">契诃夫（叙事之枪）</span>
+                                    <small class="sc-hint">会随概率触发的"叙事欠账"累积子弹。</small>
                                 </span>
                                 <input type="checkbox" id="sc_state_cat_chekhov" />
                             </label>
                             <label class="checkbox_label sc-toggle-row" for="sc_state_cat_gm_notes">
                                 <span class="sc-toggle-icon fa-solid fa-feather-pointed"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">GM Notes</span>
-                                    <small class="sc-hint">Persistent GM scratchpad with [R]/[T]/[D] prefixed entries.</small>
+                                    <span class="sc-toggle-title">GM 笔记</span>
+                                    <small class="sc-hint">持久 GM 草稿板，条目带 [R]/[T]/[D] 前缀。</small>
                                 </span>
                                 <input type="checkbox" id="sc_state_cat_gm_notes" />
                             </label>
                             <label class="checkbox_label sc-toggle-row" for="sc_state_cat_inventory">
                                 <span class="sc-toggle-icon fa-solid fa-briefcase"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Inventory & Titles</span>
-                                    <small class="sc-hint">User-only items, titles/skills, and status conditions.</small>
+                                    <span class="sc-toggle-title">物品与称号</span>
+                                    <small class="sc-hint">仅用户物品、称号/技能与状态条件。</small>
                                 </span>
                                 <input type="checkbox" id="sc_state_cat_inventory" />
                             </label>
                             <label class="checkbox_label sc-toggle-row" for="sc_state_cat_location">
                                 <span class="sc-toggle-icon fa-solid fa-location-dot"></span>
                                 <span class="sc-toggle-copy">
-                                    <span class="sc-toggle-title">Location</span>
-                                    <small class="sc-hint">Current scene location.</small>
+                                    <span class="sc-toggle-title">地点</span>
+                                    <small class="sc-hint">当前场景地点。</small>
                                 </span>
                                 <input type="checkbox" id="sc_state_cat_location" />
                             </label>
                         </div>
                         <div id="sc_macro_memory_note" class="sc-note" style="display: none;">
                             <span class="fa-solid fa-circle-info"></span>
-                            <small>Macro Only exposes <code>{{summaryception_memory}}</code> and skips direct prompt injection.</small>
+                            <small>仅宏模式暴露 <code>{{summaryception_memory}}</code>，跳过直接提示词注入。</small>
                         </div>
                     </div>
                 </section>
@@ -902,28 +902,28 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-pen-to-square"></span>
-                            Prompts
+                            提示词
                         </h4>
                     </div>
-                    <small class="sc-help-text">Edit Layer 0 summarization prompts and Layer 1+ promotion prompts.</small>
+                    <small class="sc-help-text">编辑 Layer 0 摘要提示词与 Layer 1+ 提升提示词。</small>
                     <div class="sc-row sc-prompt-secondary">
                         <label for="sc_injection_template">
-                            <span>Injection Wrapper Template</span>
-                            <small class="sc-hint">Put <code>{{summary}}</code> where you want the combined summary block.</small>
+                            <span>注入包装模板</span>
+                            <small class="sc-hint">在需要合并摘要块的位置放置 <code>{{summary}}</code>。</small>
                         </label>
                         <textarea id="sc_injection_template" class="text_pole sc-textarea" rows="3"></textarea>
                         <div class="sc-button-row sc-button-row-split">
-                            <button id="sc_insert_recall_template" class="menu_button" type="button" title="Replace the template with a sample that repeats the memory block for stronger recall.">
+                            <button id="sc_insert_recall_template" class="menu_button" type="button" title="用重复记忆块的示例替换该模板，以获得更强的召回。">
                                 <i class="fa-solid fa-repeat"></i>
-                                <span>Recall-Repeat Sample</span>
+                                <span>召回-重复示例</span>
                             </button>
-                            <button id="sc_restore_injection_template" class="menu_button" type="button" title="Restore the default Injection Wrapper Template.">
+                            <button id="sc_restore_injection_template" class="menu_button" type="button" title="恢复默认的注入包装模板。">
                                 <i class="fa-solid fa-rotate-left"></i>
-                                <span>Restore Default</span>
+                                <span>恢复默认</span>
                             </button>
                         </div>
                     </div>
-                    <div class="sc-prompt-segment" role="tablist" aria-label="Prompt editor">
+                    <div class="sc-prompt-segment" role="tablist" aria-label="提示词编辑器">
                         <button class="sc-prompt-segment-button active" type="button" role="tab" aria-selected="true" data-sc-prompt-tab="layer0">
                             <i class="fa-solid fa-layer-group"></i>
                             <span>Layer 0</span>
@@ -934,117 +934,117 @@
                         </button>
                     </div>
                     <div class="sc-prompt-pane active" role="tabpanel" data-sc-prompt-panel="layer0">
-                    <small class="sc-help-text">Used for raw chat to Layer 0 summaries and Layer 0 regeneration.</small>
+                    <small class="sc-help-text">用于将原始对话生成为 Layer 0 摘要，以及 Layer 0 重新生成。</small>
                     <div class="sc-setting-row">
                         <label for="sc_summarizer_system_prompt_preset">
-                            <span>Layer 0 System Preset</span>
+                            <span>Layer 0 系统预设</span>
                         </label>
                         <select id="sc_summarizer_system_prompt_preset" class="text_pole">
-                            <option value="narrative">Default</option>
-                            <option value="custom">Custom</option>
+                            <option value="narrative">默认</option>
+                            <option value="custom">自定义</option>
                         </select>
                     </div>
                     <div class="sc-row sc-prompt-secondary">
                         <label for="sc_summarizer_system_prompt">
-                            <span>Layer 0 System Prompt</span>
+                            <span>Layer 0 系统提示词</span>
                         </label>
                         <textarea id="sc_summarizer_system_prompt" class="text_pole sc-textarea" rows="3"></textarea>
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_prompt_preset">
-                            <span>Layer 0 User Preset</span>
+                            <span>Layer 0 用户预设</span>
                         </label>
                         <select id="sc_prompt_preset" class="text_pole">
-                            <option value="narrative">Default</option>
-                            <option value="custom">Custom</option>
+                            <option value="narrative">默认</option>
+                            <option value="custom">自定义</option>
                         </select>
                     </div>
                     <div class="sc-row sc-prompt-primary">
                         <label for="sc_summarizer_user_prompt">
-                            <span>Layer 0 User Prompt</span>
+                            <span>Layer 0 用户提示词</span>
                             <small class="sc-hint">
-                                Variables: <code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code>
+                                变量：<code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code>
                             </small>
                             <small class="sc-hint">
-                                Custom Layer 0 prompts must output a <code>[NARRATIVE]</code> and a full, compact <code>[STATE]</code> snapshot using only the supported state keys. Anything you leave out is gone, and newer verbatim chat overrides the compressed state.
+                                自定义 Layer 0 提示词必须仅使用支持的 state 键输出 <code>[NARRATIVE]</code> 和一份完整、紧凑的 <code>[STATE]</code> 快照。任何遗漏的信息都会丢失，较新的逐字对话会覆盖压缩后的状态。
                             </small>
                         </label>
                         <textarea id="sc_summarizer_user_prompt" class="text_pole sc-textarea sc-textarea-tall" rows="10"></textarea>
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_summarizer_repair_prompt_preset">
-                            <span>Layer 0 Repair Preset</span>
+                            <span>Layer 0 修复预设</span>
                         </label>
                         <select id="sc_summarizer_repair_prompt_preset" class="text_pole">
-                            <option value="narrative">Default</option>
-                            <option value="custom">Custom</option>
+                            <option value="narrative">默认</option>
+                            <option value="custom">自定义</option>
                         </select>
                     </div>
                     <div class="sc-row sc-prompt-secondary">
                         <label for="sc_summarizer_repair_prompt">
-                            <span>Layer 0 Repair Prompt</span>
+                            <span>Layer 0 修复提示词</span>
                             <small class="sc-hint">
-                                Variables: <code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code>
+                                变量：<code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code>
                             </small>
                         </label>
                         <textarea id="sc_summarizer_repair_prompt" class="text_pole sc-textarea sc-textarea-tall" rows="8"></textarea>
                     </div>
                     </div>
                     <div class="sc-prompt-pane" role="tabpanel" data-sc-prompt-panel="promotion" hidden>
-                    <small class="sc-help-text">Used when consolidating lower-layer memories into deeper meta-summaries.</small>
+                    <small class="sc-help-text">用于将低层记忆整合为更深的元摘要。</small>
                     <div class="sc-setting-row">
                         <label for="sc_promotion_system_prompt_preset">
-                            <span>Layer 1+ System Preset</span>
+                            <span>Layer 1+ 系统预设</span>
                         </label>
                         <select id="sc_promotion_system_prompt_preset" class="text_pole">
-                            <option value="narrative">Default</option>
-                            <option value="custom">Custom</option>
+                            <option value="narrative">默认</option>
+                            <option value="custom">自定义</option>
                         </select>
                     </div>
                     <div class="sc-row sc-prompt-secondary">
                         <label for="sc_promotion_system_prompt">
-                            <span>Promotion System Prompt</span>
+                            <span>提升系统提示词</span>
                         </label>
                         <textarea id="sc_promotion_system_prompt" class="text_pole sc-textarea" rows="3"></textarea>
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_promotion_prompt_preset">
-                            <span>Layer 1+ User Preset</span>
+                            <span>Layer 1+ 用户预设</span>
                         </label>
                         <select id="sc_promotion_prompt_preset" class="text_pole">
-                            <option value="narrative">Default</option>
-                            <option value="custom">Custom</option>
+                            <option value="narrative">默认</option>
+                            <option value="custom">自定义</option>
                         </select>
                     </div>
                     <div class="sc-row sc-prompt-primary">
                         <label for="sc_promotion_user_prompt">
-                            <span>Promotion User Prompt</span>
+                            <span>提升用户提示词</span>
                             <small class="sc-hint">
-                                Variables: <code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code>
+                                变量：<code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code>
                             </small>
                             <small class="sc-hint">
-                                <code>{{story_txt}}</code> is the lower-layer memory; <code>{{context_str}}</code> is the existing deeper memory.
+                                <code>{{story_txt}}</code> 是低层记忆；<code>{{context_str}}</code> 是已有的更深记忆。
                             </small>
                             <small class="sc-hint">
-                                Custom promotion prompts should give you one narrative paragraph only. State gets merged separately.
+                                自定义提升提示词应只生成一段叙事。状态会单独合并。
                             </small>
                         </label>
                         <textarea id="sc_promotion_user_prompt" class="text_pole sc-textarea sc-textarea-tall" rows="10"></textarea>
                     </div>
                     <div class="sc-setting-row">
                         <label for="sc_promotion_repair_prompt_preset">
-                            <span>Layer 1+ Repair Preset</span>
+                            <span>Layer 1+ 修复预设</span>
                         </label>
                         <select id="sc_promotion_repair_prompt_preset" class="text_pole">
-                            <option value="narrative">Default</option>
-                            <option value="custom">Custom</option>
+                            <option value="narrative">默认</option>
+                            <option value="custom">自定义</option>
                         </select>
                     </div>
                     <div class="sc-row sc-prompt-secondary">
                         <label for="sc_promotion_repair_prompt">
-                            <span>Layer 1+ Repair Prompt</span>
+                            <span>Layer 1+ 修复提示词</span>
                             <small class="sc-hint">
-                                Variables: <code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code> <code>{{source_state}}</code>
+                                变量：<code>{{player_name}}</code> <code>{{context_str}}</code> <code>{{story_txt}}</code> <code>{{source_state}}</code>
                             </small>
                         </label>
                         <textarea id="sc_promotion_repair_prompt" class="text_pole sc-textarea sc-textarea-tall" rows="8"></textarea>
@@ -1057,13 +1057,13 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-screwdriver-wrench"></span>
-                            Cleanup And Diagnostics
+                            清理与诊断
                         </h4>
                     </div>
                     <div class="sc-row">
                         <label for="sc_strip_patterns">
-                            <span>Strip Patterns</span>
-                            <small class="sc-hint">One regex pattern per line.</small>
+                            <span>去除模式</span>
+                            <small class="sc-hint">每行一个正则模式。</small>
                         </label>
                         <textarea id="sc_strip_patterns" class="text_pole sc-textarea" rows="4"></textarea>
                     </div>
@@ -1071,32 +1071,32 @@
                         <label class="checkbox_label sc-toggle-row" for="sc_debug_mode">
                             <span class="sc-toggle-icon fa-solid fa-bug"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Debug Mode</span>
-                                <small class="sc-hint">Dumps verbose logs to the console.</small>
+                                <span class="sc-toggle-title">调试模式</span>
+                                <small class="sc-hint">向控制台输出详细日志。</small>
                             </span>
                             <input type="checkbox" id="sc_debug_mode" />
                         </label>
                         <label class="checkbox_label sc-toggle-row" for="sc_trace_mode">
                             <span class="sc-toggle-icon fa-solid fa-route"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Trace Mode</span>
-                                <small class="sc-hint">Detailed flow logs to the console. Needs Debug Mode on.</small>
+                                <span class="sc-toggle-title">跟踪模式</span>
+                                <small class="sc-hint">向控制台输出详细流程日志。需要开启调试模式。</small>
                             </span>
                             <input type="checkbox" id="sc_trace_mode" />
                         </label>
                         <label class="checkbox_label sc-toggle-row" for="sc_prompt_input_log_mode">
                             <span class="sc-toggle-icon fa-solid fa-terminal"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Log LLM Inputs</span>
-                                <small class="sc-hint">Prints the full final system and user content sent to the summarizer in the F12 console.</small>
+                                <span class="sc-toggle-title">记录 LLM 输入</span>
+                                <small class="sc-hint">在 F12 控制台打印发送给摘要器的完整最终系统与用户内容。</small>
                             </span>
                             <input type="checkbox" id="sc_prompt_input_log_mode" />
                         </label>
                         <label class="checkbox_label sc-toggle-row" for="sc_prompt_output_log_mode">
                             <span class="sc-toggle-icon fa-solid fa-reply"></span>
                             <span class="sc-toggle-copy">
-                                <span class="sc-toggle-title">Log LLM Outputs</span>
-                                <small class="sc-hint">Prints cleaned summaries and errors in the F12 console.</small>
+                                <span class="sc-toggle-title">记录 LLM 输出</span>
+                                <small class="sc-hint">在 F12 控制台打印清理后的摘要与错误。</small>
                             </span>
                             <input type="checkbox" id="sc_prompt_output_log_mode" />
                         </label>
@@ -1106,17 +1106,17 @@
                     <div class="sc-section-header">
                         <h4 class="sc-section-title">
                             <span class="fa-solid fa-triangle-exclamation"></span>
-                            Maintenance
+                            维护
                         </h4>
                     </div>
                     <div class="sc-button-row">
                         <button id="sc_reset_defaults" class="menu_button">
                             <i class="fa-solid fa-arrow-rotate-left"></i>
-                            <span>Reset</span>
+                            <span>重置</span>
                         </button>
                         <button id="sc_clear_memory" class="menu_button menu_button_danger">
                             <i class="fa-solid fa-trash"></i>
-                            <span>Clear</span>
+                            <span>清除</span>
                         </button>
                     </div>
                 </section>

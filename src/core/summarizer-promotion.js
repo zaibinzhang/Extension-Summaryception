@@ -323,7 +323,7 @@ async function prepareLayerPromotion({ layerIndex, settings, quota, layerTokens,
 
 async function generateValidatedPromotion(prepared) {
     toastr.info(
-        `Promoting ${prepared.toMerge.length} memories: Layer ${prepared.layerIndex} -> ` +
+        `正在提升 ${prepared.toMerge.length} 条记忆：Layer ${prepared.layerIndex} -> ` +
             `Layer ${prepared.layerIndex + 1}`,
         'Summaryception',
         { timeOut: 3000, progressBar: true },

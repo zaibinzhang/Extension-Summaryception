@@ -86,7 +86,7 @@ async function countStatePart(stateText) {
     }
     const tokens = await countTextTokens(stateText);
     return {
-        label: 'State',
+        label: '状态',
         kind: 'state',
         count: tokens.count,
         estimated: tokens.estimated,
@@ -115,7 +115,7 @@ function buildWrapperPart(total, countedParts) {
         return null;
     }
     return {
-        label: 'Wrapper',
+        label: '包装',
         kind: 'wrapper',
         count,
         estimated: total.estimated || countedParts.some((part) => part.estimated),

@@ -176,17 +176,17 @@ export function syncLLMContextPreview(s = getEffectiveSettings()) {
     const $l0Value = $('#sc_llm_context_l0');
     const $l1Value = $('#sc_llm_context_l1');
 
-    $mainValue.text(`Max ~${formatContextTokenCount(mainBudget)} + ST prompt`);
+    $mainValue.text(`最大约 ${formatContextTokenCount(mainBudget)} + ST 提示词`);
     if (minL0Source < maxL0Source) {
         $l0Value.text(
-            `~${formatContextTokenCount(l0Typical)} (Max ~${formatContextTokenCount(l0Max)})`,
+            `约 ${formatContextTokenCount(l0Typical)}（最大约 ${formatContextTokenCount(l0Max)}）`,
         );
         setContextValueColor($l0Value, l0Typical);
     } else {
-        $l0Value.text(`Max ~${formatContextTokenCount(l0Max)} tokens`);
+        $l0Value.text(`最大约 ${formatContextTokenCount(l0Max)} token`);
         setContextValueColor($l0Value, l0Max);
     }
-    $l1Value.text(`Max ~${formatContextTokenCount(l1Total)} tokens`);
+    $l1Value.text(`最大约 ${formatContextTokenCount(l1Total)} token`);
 
     setContextValueColor($mainValue, mainBudget);
     setContextValueColor($l1Value, l1Total);
@@ -203,23 +203,23 @@ export async function refreshMainLLMContextEstimate() {
         return;
     }
     if (isSendButtonInStopMode()) {
-        $value.text('Busy').removeClass(CONTEXT_COLOR_CLASSES).addClass('sc-ctx-caution');
+        $value.text('忙碌').removeClass(CONTEXT_COLOR_CLASSES).addClass('sc-ctx-caution');
         return;
     }
 
     setMainEstimateButtonBusy($button, true);
-    $value.text('Estimating...').removeClass(CONTEXT_COLOR_CLASSES);
+    $value.text('估算中…').removeClass(CONTEXT_COLOR_CLASSES);
     try {
         const tokens = await estimateMainPromptTokens();
         if (typeof tokens !== 'number' || !Number.isFinite(tokens)) {
-            $value.text('Unavailable').addClass('sc-ctx-caution');
+            $value.text('不可用').addClass('sc-ctx-caution');
             return;
         }
-        $value.text(`Actual ~${formatContextTokenCount(tokens)} tokens`);
+        $value.text(`实际约 ${formatContextTokenCount(tokens)} token`);
         setContextValueColor($value, tokens);
     } catch (e) {
         warn('Main prompt estimate failed:', e);
-        $value.text('Unavailable').addClass('sc-ctx-caution');
+        $value.text('不可用').addClass('sc-ctx-caution');
     } finally {
         setMainEstimateButtonBusy($button, false);
     }
@@ -319,24 +319,24 @@ async function renderEasyOverview(s, store) {
 
 function getModeLabel(s) {
     if (s.uiMode === UI_MODES.EASY) {
-        return 'Easy';
+        return '简易';
     }
     if (s.uiMode === UI_MODES.ADVANCED) {
-        return 'Advanced';
+        return '高级';
     }
-    return 'Off';
+    return '关闭';
 }
 
 async function getWorkerLabel(s, store) {
     if (getIsSummarizing()) {
-        return 'Running';
+        return '运行中';
     }
     if (!s.enabled) {
-        return 'Off';
+        return '关闭';
     }
 
     const backlogCount = await getVisibleBacklogCount(s, store);
-    return backlogCount > 0 ? `Backlog ${backlogCount}` : 'Idle';
+    return backlogCount > 0 ? `积压 ${backlogCount}` : '空闲';
 }
 
 async function getVisibleBacklogCount(s, store) {
@@ -420,7 +420,7 @@ export function buildContextBudgetViewModel({
     if (freeCount > 0) {
         segments.push(
             buildBudgetSegment(
-                { label: 'Free Space', kind: 'free', count: freeCount, estimated: false },
+                { label: '可用空间', kind: 'free', count: freeCount, estimated: false },
                 denominator,
             ),
         );
@@ -500,7 +500,7 @@ async function renderTriggerGauge(s, store) {
         const view = buildContextBudgetViewModel({
             budget: model.triggerTokens,
             verbatim: {
-                label: 'Queued',
+                label: '已排队',
                 kind: 'pending',
                 count: model.queuedTokens,
                 estimated: model.queuedEstimated,
@@ -540,7 +540,7 @@ export function buildTriggerGaugeModel(plan, s) {
         queuedTokens,
         queuedEstimated,
         triggerTokens,
-        label: turnEquivalent > minBudget ? `Trigger: ${minTurns} turns` : 'Trigger: tokens',
+        label: turnEquivalent > minBudget ? `触发点：${minTurns} 回合` : '触发点：token',
     };
 }
 
@@ -557,7 +557,7 @@ async function renderMemoryBudget(
         const usage = await getEffectiveMemoryUsage(store.layers, s);
         const view = buildContextBudgetViewModel({
             budget: s.memoryTokenBudget,
-            verbatim: { label: 'Live Chat', kind: 'verbatim', count: 0, estimated: false },
+            verbatim: { label: '实时对话', kind: 'verbatim', count: 0, estimated: false },
             layers: orderMemoryBudgetParts(usage.parts),
         });
         renderBudgetView(view, targets);
@@ -570,7 +570,7 @@ async function renderMemoryBudget(
 async function getVerbatimBudgetPart(s, store) {
     const plan = await buildAutoSummaryRoutePlan(getChat(), store, s);
     return {
-        label: 'Verbatim Window',
+        label: '逐字窗口',
         kind: 'verbatim',
         count: getRouteBudgetStats(plan).finalTokens,
         estimated: getRouteBudgetStats(plan).finalTokensEstimated,
@@ -612,7 +612,7 @@ function renderBudgetView(view, targets) {
             .toggleClass('sc-context-segment-small', segment.small)
             .css('flex', `${Math.max(segment.count, 1)} 1 0`)
             .attr('title', getBudgetSegmentTitle(segment))
-            .text(`${segment.label} (${formatBudgetTokenLabel(segment.count, segment.estimated)})`)
+            .text(`${segment.label}（${formatBudgetTokenLabel(segment.count, segment.estimated)}）`)
             .appendTo(bar);
         renderBudgetLegendItem(legend, segment);
     }
@@ -627,7 +627,7 @@ function renderBudgetView(view, targets) {
 }
 
 function clearBudgetView(totalSelector, barSelector, legendSelector) {
-    $(totalSelector).text('Unavailable');
+    $(totalSelector).text('不可用');
     $(barSelector).empty();
     $(legendSelector).empty();
 }
@@ -638,7 +638,7 @@ function renderBudgetLegendItem(legend, segment) {
         .addClass(`sc-context-${segment.kind}`)
         .appendTo(item);
     $('<span class="sc-context-legend-text"></span>')
-        .text(`${segment.label}: ${formatBudgetTokenLabel(segment.count, segment.estimated)}`)
+        .text(`${segment.label}：${formatBudgetTokenLabel(segment.count, segment.estimated)}`)
         .attr('title', getBudgetSegmentTitle(segment))
         .appendTo(item);
     item.appendTo(legend);
@@ -661,7 +661,7 @@ function buildBudgetSegment(part, denominator) {
 }
 
 function getBudgetSegmentTitle(segment) {
-    return `${segment.label}: ${formatBudgetTokenLabel(segment.count, segment.estimated)} tokens`;
+    return `${segment.label}：${formatBudgetTokenLabel(segment.count, segment.estimated)} token`;
 }
 
 /**
@@ -688,22 +688,22 @@ function normalizeBudgetCount(count) {
 function renderLayerStats(s, store) {
     const ghostedCount = getGhostedCount();
 
-    let statsHtml = `<div class="sc-layer-stat"><strong>${ghostedCount}</strong> messages ghosted (hidden from LLM, visible to you)</div>`;
+    let statsHtml = `<div class="sc-layer-stat"><strong>${ghostedCount}</strong> 条消息已隐藏（对 LLM 隐藏，对你可见）</div>`;
     if (store.layers) {
         for (let i = store.layers.length - 1; i >= 0; i--) {
             const layer = store.layers[i];
             if (layer && layer.length > 0) {
-                const label = i === 0 ? 'Layer 0 (turn summaries)' : `Layer ${i} (depth ${i} meta)`;
+                const label = i === 0 ? 'Layer 0（回合摘要）' : `Layer ${i}（深度 ${i} 元摘要）`;
                 statsHtml += `<div class="sc-layer-stat">
                 <span class="sc-layer-label">${label}:</span>
-                <strong>${layer.length}</strong> / ${s.snippetsPerLayer} memories
+                <strong>${layer.length}</strong> / ${s.snippetsPerLayer} 记忆
                 </div>`;
             }
         }
     }
-    statsHtml += `<div class="sc-layer-stat sc-muted">Summarized up to chat index: ${store.summarizedUpTo ?? -1}</div>`;
+    statsHtml += `<div class="sc-layer-stat sc-muted">已摘要到聊天索引：${store.summarizedUpTo ?? -1}</div>`;
     if (!store.layers?.length || store.layers.every((l) => !l || l.length === 0)) {
-        statsHtml = '<div class="sc-layer-stat sc-muted">No summaries yet for this chat.</div>';
+        statsHtml = '<div class="sc-layer-stat sc-muted">该聊天还没有摘要。</div>';
     }
 
     $('#sc_layer_stats').html(statsHtml);
@@ -715,15 +715,15 @@ function renderLayerStats(s, store) {
  */
 async function renderPreview() {
     const preview = assembleSummaryBlock();
-    $('#sc_preview').val(preview || '(empty - no summaries yet)');
+    $('#sc_preview').val(preview || '（空 - 尚无摘要）');
     if (!preview) {
-        $('#sc_preview_token_count').text('0 tokens');
+        $('#sc_preview_token_count').text('0 token');
         return;
     }
 
     const tokens = await countTextTokens(preview);
     $('#sc_preview_token_count').text(
-        `${formatBudgetTokenLabel(tokens.count, tokens.estimated)} tokens`,
+        `${formatBudgetTokenLabel(tokens.count, tokens.estimated)} token`,
     );
 }
 
@@ -781,7 +781,7 @@ export function buildSnippetBrowserViewModel(store) {
         if (!layer || layer.length === 0) {
             continue;
         }
-        const label = i === 0 ? 'Layer 0 (Turn Summaries)' : `Layer ${i} (Meta-Summary)`;
+        const label = i === 0 ? 'Layer 0（回合摘要）' : `Layer ${i}（元摘要）`;
         layers.push({
             key: getSnippetLayerKey(i),
             index: i,
@@ -819,11 +819,11 @@ function buildSnippetBrowserItem(snippet, layerIndex, snippetIndex) {
 
 function getSnippetMeta(snippet) {
     const rangeStr = snippet.turnRange
-        ? `turns ${snippet.turnRange[0]}-${snippet.turnRange[1]}`
+        ? `回合 ${snippet.turnRange[0]}-${snippet.turnRange[1]}`
         : snippet.mergedCount
-          ? `merged ${snippet.mergedCount} from L${snippet.fromLayer}`
+          ? `从 L${snippet.fromLayer} 合并 ${snippet.mergedCount} 条`
           : '';
-    const seedStr = snippet.promoted ? ' promoted' : '';
+    const seedStr = snippet.promoted ? '（已提升）' : '';
     return `${rangeStr}${seedStr}`;
 }
 
@@ -868,7 +868,7 @@ function renderEmptySnippetBrowser(browser) {
     }
 
     browser.children().remove();
-    $('<div class="sc-muted"></div>').text('No snippets to display.').appendTo(browser);
+    $('<div class="sc-muted"></div>').text('没有可显示的摘要片段。').appendTo(browser);
 }
 
 function removeMissingLayers(browser, layerKeys) {
@@ -987,7 +987,7 @@ function ensureSnippetText(row, snippet) {
     text.attr({
         'data-layer': String(snippet.layerIndex),
         'data-idx': String(snippet.snippetIndex),
-        title: 'Click to edit',
+        title: '点击编辑',
     });
     text.text(snippet.text);
     return text;
@@ -1013,8 +1013,8 @@ function ensureSnippetRedo(row, snippet) {
     }
     redo.attr({
         type: 'button',
-        title: 'Regenerate this snippet',
-        'aria-label': 'Regenerate this snippet',
+        title: '重新生成此摘要片段',
+        'aria-label': '重新生成此摘要片段',
     });
     return redo;
 }
@@ -1026,8 +1026,8 @@ function ensureSnippetDelete(row) {
     }
     remove.attr({
         type: 'button',
-        title: 'Delete this snippet',
-        'aria-label': 'Delete this snippet',
+        title: '删除此摘要片段',
+        'aria-label': '删除此摘要片段',
     });
     return remove;
 }
@@ -1104,7 +1104,7 @@ async function commitSnippetEdit(textarea, position) {
         textarea.val(),
     );
     if (result.status === 'updated') {
-        toastr.success('Snippet updated', 'Summaryception', {
+        toastr.success('摘要片段已更新', 'Summaryception', {
             timeOut: 1500,
         });
     }
@@ -1130,12 +1130,12 @@ async function onSnippetRedoClick() {
         handleRegenerationTargetStatus(target);
         return;
     }
-    if (!confirm(`Regenerate summary for turns ${target.range[0]}-${target.range[1]}?`)) {
+    if (!confirm(`重新生成回合 ${target.range[0]}-${target.range[1]} 的摘要？`)) {
         return;
     }
 
     toastr.info(
-        `Regenerating summary for turns ${target.range[0]}-${target.range[1]}...`,
+        `正在重新生成回合 ${target.range[0]}-${target.range[1]} 的摘要…`,
         'Summaryception',
         {
             timeOut: 3000,
@@ -1154,7 +1154,7 @@ async function onSnippetDeleteClick() {
     const result = await deleteSnippetAt(position.layerIdx, position.snippetIdx);
     if (result.status === 'deleted') {
         updateUI();
-        toastr.info(`Snippet removed from Layer ${result.layerIndex}`, 'Summaryception');
+        toastr.info(`已从 Layer ${result.layerIndex} 移除摘要片段`, 'Summaryception');
     }
 }
 
@@ -1163,12 +1163,12 @@ function handleRegenerationTargetStatus(target) {
         return true;
     }
     if (target.status === 'busy') {
-        toastr.warning('Already summarizing. Please wait.', 'Summaryception');
+        toastr.warning('正在摘要中，请稍候。', 'Summaryception');
         return false;
     }
     if (target.status === 'unsupported') {
         toastr.warning(
-            'Only Layer 0 (turn summary) snippets can be regenerated. Promoted meta-summaries have no source turns.',
+            '只有 Layer 0（回合摘要）片段可以重新生成。已提升的元摘要没有源回合。',
             'Summaryception',
             { timeOut: 5000 },
         );
@@ -1190,18 +1190,18 @@ function handleRegenerationResult(result) {
     if (result.status === 'regenerated') {
         updateUI();
         toastr.success(
-            `Snippet regenerated for turns ${result.range[0]}-${result.range[1]}`,
+            `已重新生成回合 ${result.range[0]}-${result.range[1]} 的摘要`,
             'Summaryception',
             { timeOut: 3000 },
         );
         return;
     }
     if (result.status === 'empty-source') {
-        toastr.error('Source turns are empty - cannot regenerate.', 'Summaryception');
+        toastr.error('源回合为空 - 无法重新生成。', 'Summaryception');
     } else if (result.status === 'failed') {
-        toastr.error('Regeneration failed - original snippet kept.', 'Summaryception');
+        toastr.error('重新生成失败 - 保留原始摘要。', 'Summaryception');
     } else if (result.status === 'busy') {
-        toastr.warning('Already summarizing. Please wait.', 'Summaryception');
+        toastr.warning('正在摘要中，请稍候。', 'Summaryception');
     } else if (result.status === 'unsupported') {
         handleRegenerationTargetStatus(result);
     }

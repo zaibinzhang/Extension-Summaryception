@@ -1,147 +1,158 @@
 # Summaryception
 
-Layered recursive memory for SillyTavern.
+为 SillyTavern 提供分层递归记忆。
 
-Summaryception is for long roleplay chats that should remember what happened without shoving the whole backstory into every prompt. It runs as a plain browser extension inside [SillyTavern](https://github.com/SillyTavern/SillyTavern). No build step, no server, no database.
+> ## 本分支说明（中文汉化版）
+>
+> 本仓库是 [Extension-Summaryception](https://github.com/vadash/Extension-Summaryception) 的 **fork**。基于上游 **v20.8.0**，我做的工作是**整体中文化（汉化）**：
+>
+> - **汉化了全部用户界面**：设置面板（`settings.html`）、帮助提示、状态显示、toast/确认弹窗、斜杠命令（`/sc-status`、`/sc-preview`、`/sc-clear`）输出等用户可见文案。
+> - **汉化了本 README**。
+> - **保留英文、不翻译**（避免影响功能与提示词解析）：注入到模型上下文的提示词模板（Layer 0 / Layer 1+ 摘要、修复）、`[NARRATIVE]`/`[STATE]`/`[CHRONOLOGY]` 结构头、`{{...}}` 宏名、代码注释与开发者文档（`agent_docs/`、`docs/`）。
+> - **未改动任何核心逻辑**：分层递归摘要、消息隐藏（ghosting）、记忆注入、连接路由等行为与上游完全一致，测试全部通过。
+>
+> 上游仓库：<https://github.com/vadash/Extension-Summaryception>
 
-The short version: recent chat stays verbatim. Older chat becomes compact memory. The original messages stay in the chat UI, but Summaryception hides them from the model once they are covered by memory.
+Summaryception 面向需要记住发生之事的长角色扮演对话，且不会把整段背景故事塞进每次提示词。它以普通浏览器扩展的形式运行在 [SillyTavern](https://github.com/SillyTavern/SillyTavern) 内。无需构建步骤、无需服务器、无需数据库。
 
-## Why this exists
+简而言之：近期对话保持逐字原文。更早的对话变成紧凑记忆。原始消息仍留在聊天界面中，但一旦被记忆覆盖，Summaryception 就会把它们从模型中隐藏起来。
 
-Long chats usually fail in one of two boring ways.
+## 为什么需要它
 
-You keep too much raw chat, so every generation drags a huge pile of old prose through the context window. Or you keep one normal summary, watch it blur details together, and start adding more raw chat again to compensate.
+长对话通常以两种无聊的方式失败。
 
-Summaryception takes the other route. It summarizes older chat in small pieces, then summarizes those summaries again when they pile up. The result is a memory stack: recent text at the bottom, compact turn summaries above it, deeper summaries above those.
+要么保留太多原始对话，让每次生成都把一大摞旧文本拖进上下文窗口；要么只保留一份普通摘要，看着细节逐渐模糊，然后又为了弥补而重新加入原始对话。
+
+Summaryception 走了另一条路。它先把较老的对话切小块分别摘要，等这些摘要堆积起来后，再对摘要本身递归摘要。结果是记忆栈：底层是近期文本，其上是紧凑的回合摘要，再往上是更深的摘要。
 
 ```text
-Current chat
+当前对话
 |
-|  Older messages: ghosted from the model, still visible to you
-|  Recent messages: sent word for word
+|  较老消息：从模型中隐藏，对你仍可见
+|  近期消息：逐字发送
 |
-|  Injected memory:
+|  注入的记忆：
 |
-|  Layer 2+  deep memory from promoted summaries
-|  Layer 1   merged Layer 0 summaries
-|  Layer 0   direct summaries of chat turns
-|  Verbatim  the live recent window
+|  Layer 2+  由提升摘要而来的深层记忆
+|  Layer 1   合并后的 Layer 0 摘要
+|  Layer 0   对话回合的直接摘要
+|  逐字      实时的近期窗口
 ```
 
-That sounds abstract until you hit a 2,000 message chat and the model still remembers who promised what, who is injured, where the party left the key, and which subplot was quietly waiting in the corner.
+听起来很抽象，直到你遇到一个 2000 条消息的对话，模型却仍然记得谁答应了什么、谁受了伤、队伍把钥匙留在了哪里，以及哪个支线剧情还安静地等着收尾。
 
-## What it does
+## 它的功能
 
-- Keeps a rolling verbatim window for recent chat.
-- Compresses older chat into Layer 0 memories.
-- Promotes older Layer 0 memories into deeper layers when the layer gets crowded.
-- Separates narrative continuity from a compact rolling state snapshot using `[NARRATIVE]` and `[STATE]`.
-- Ghosts summarized messages with SillyTavern's `/hide`, so they stop reaching the model but remain readable in the UI.
-- Injects the assembled memory through SillyTavern extension prompts, or exposes it as `{{summaryception_memory}}` for custom prompt layouts.
-- Runs background summarization without mutating the prompt during an active generation.
+- 为近期对话保留滚动逐字窗口。
+- 把较老的对话压缩为 Layer 0 记忆。
+- 当某层变得拥挤时，把更老的 Layer 0 记忆提升到更深层。
+- 用 `[NARRATIVE]` 和 `[STATE]` 把叙事连续性与紧凑的滚动状态快照分开。
+- 用 SillyTavern 的 `/hide` 隐藏已摘要的消息，使它们不再进入模型，但在界面中仍可阅读。
+- 通过 SillyTavern 扩展提示词注入组装好的记忆，或把它暴露为 `{{summaryception_memory}}` 供自定义提示词布局使用。
+- 在后台执行摘要，不干扰进行中的生成。
 
-## Install
+## 安装
 
-Requirements: SillyTavern 1.16.0 or newer.
+环境要求：SillyTavern 1.16.0 或更高版本。
 
-In SillyTavern:
+在 SillyTavern 中：
 
-1. Open Extensions.
-2. Choose Install Extension.
-3. Paste `https://github.com/vadash/Extension-Summaryception`.
-4. Install, then open Summaryception in extension settings.
+1. 打开扩展（Extensions）。
+2. 选择安装扩展（Install Extension）。
+3. 粘贴 `https://github.com/vadash/Extension-Summaryception`。
+4. 安装，然后在扩展设置中打开 Summaryception。
 
-## First setup
+## 初次设置
 
-Start with Easy mode unless you already know what you want to tune.
+除非你已明确知道要调什么，否则从简易模式开始。
 
-Set Fast Summarizer to your normal API or a SillyTavern Connection Profile. This model handles raw chat to Layer 0 summaries, so it should be cheap, fast, and good enough at extracting facts.
+把快速摘要器设置为你的常规 API 或一个 SillyTavern 连接档案。这个模型负责把原始对话变成 Layer 0 摘要，所以它应当便宜、快速，并且擅长提取事实。
 
-Smart Deep Memory is optional. Use it when you want Layer 1+ merges to use a stronger model than the raw-chat summarizer.
+智能深度记忆是可选的。当你想让 Layer 1+ 的合并使用比原始对话摘要器更强的模型时使用它。
 
-Then pick a memory style:
+然后选择一种记忆风格：
 
-- Standard keeps the main prompt smaller and summarizes overflow continuously.
-- Cache Friendly keeps a larger live window and a stable memory prefix for providers with prompt caching discounts.
+- 标准模式让主提示词更小，并持续摘要溢出内容。
+- 缓存友好模式为有提示词缓存折扣的提供商保留更大的实时窗口和稳定的记忆前缀。
 
-The defaults are intentionally conservative: 22k recent verbatim tokens, 10k injected memory, 200 token Layer 0 targets, and promotion after old memories stack up.
+默认值刻意保守：22k 近期逐字 token、10k 注入记忆、200 token 的 Layer 0 目标，以及旧记忆堆积后的提升。
 
-## Controls you will actually use
+## 你真正会用到的控制项
 
-Force Summarize processes eligible old chat now instead of waiting for the background worker.
+强制摘要：立即处理合格的旧对话，而不是等待后台工作线程。
 
-Slop Breaker is for the moment when the model starts repeating itself or gets stuck in a bad format. It summarizes through the current live context cut, ghosts that text, and forces the next generation to work from compact memory instead of stale phrasing.
+失控清理（Slop Breaker）：用于模型开始自我重复或卡在错误格式的时刻。它会摘要当前实时上下文边界内的内容、隐藏这些文本，并迫使下一次生成基于紧凑记忆而不是过时的措辞。
 
-Stop cancels the current summarization run.
+停止：取消当前的摘要运行。
 
-Clear removes Summaryception memory for the current chat and unghosts messages Summaryception owns. It does not delete chat messages.
+清除：移除当前对话的 Summaryception 记忆，并取消隐藏 Summaryception 拥有的消息。它不会删除聊天消息。
 
-## Advanced mode
+## 高级模式
 
-Advanced mode exposes the knobs Easy mode hides:
+高级模式暴露了简易模式隐藏的调节项：
 
-- Verbatim and injected memory token budgets.
-- Layer 0 batch sizes and source token caps.
-- Memories per layer and memories per merge.
-- Memory placement: Before Prompt, In Prompt, In Chat, or Macro Only.
-- Memory role: system, user, or assistant.
-- Separate prompts for Layer 0 summaries, Layer 1+ promotions, and repair attempts.
-- Regex cleanup, Chinese ideograph stripping, debug logs, trace logs, and prompt I/O logs.
+- 逐字与注入记忆的 token 预算。
+- Layer 0 批次大小与来源 token 上限。
+- 每层记忆数与每次合并记忆数。
+- 记忆位置：提示词前、提示词内、对话内、仅宏。
+- 记忆角色：系统、用户或助手。
+- Layer 0 摘要、Layer 1+ 提升与修复尝试的独立提示词。
+- 正则清理、中文象形文字剥离、调试日志、跟踪日志与提示词输入输出日志。
 
-Macro Only is useful when your prompt already has a deliberate memory slot. Add `{{summaryception_memory}}` where you want the assembled memory to appear.
+仅宏模式适合你的提示词已有固定记忆槽位的情况。在你想要组装记忆出现的位置添加 `{{summaryception_memory}}`。
 
-## Connection routes
+## 连接路由
 
-Summaryception can use:
+Summaryception 可以使用：
 
-- SillyTavern's active main API.
-- SillyTavern Connection Profiles.
-- Ollama.
-- OpenAI-compatible endpoints.
+- SillyTavern 当前激活的主 API。
+- SillyTavern 连接档案。
+- Ollama。
+- 兼容 OpenAI 的端点。
 
-There are three routes:
+共有三条路由：
 
-- Layer 0 for new raw-chat summaries.
-- Merge for deeper Layer 1+ promotion work.
-- Fallback for retryable failures after the primary route gives up.
+- Layer 0：用于新的原始对话摘要。
+- 合并：用于更深的 Layer 1+ 提升工作。
+- 回退：主路由放弃可重试错误后的故障转移。
 
-OpenAI-compatible local endpoints may need SillyTavern's CORS proxy. Streaming responses must finish with `data: [DONE]`; incomplete streams are treated as failed attempts.
+兼容 OpenAI 的本地端点可能需要 SillyTavern 的 CORS 代理。流式响应必须以 `data: [DONE]` 结束；不完整的流会被当作失败尝试。
 
-## Slash commands
+## 斜杠命令
 
-`/sc-status` shows the current summarized index and layer counts.
+`/sc-status` 显示当前已摘要索引与各层数量。
 
-`/sc-preview` prints the memory block that would be injected.
+`/sc-preview` 打印将要注入的记忆块。
 
-`/sc-clear` clears Summaryception memory for the current chat and unghosts Summaryception-owned messages.
+`/sc-clear` 清除当前对话的 Summaryception 记忆，并取消隐藏 Summaryception 拥有的消息。
 
-## Safety notes
+## 安全说明
 
-Summaryception is designed to be non-destructive. Summaries live in chat metadata. Settings live in extension settings. Ghosted messages are marked with `extra.sc_ghosted`, so the extension can tell its own hidden messages apart from messages you hid yourself.
+Summaryception 设计为非破坏性的。摘要存于聊天元数据中。设置存于扩展设置中。被隐藏的消息带有 `extra.sc_ghosted` 标记，因此扩展能区分自己隐藏的消息与你手动隐藏的消息。
 
-If something looks off, use Clear or `/sc-clear`. That removes Summaryception's memory and ownership flags for the current chat, then unghosts the messages it owns.
+如果有什么看起来不对劲，使用清除或 `/sc-clear`。这会移除当前对话的 Summaryception 记忆与所有权标记，然后取消隐藏它所拥有的消息。
 
-## Version history
+## 版本历史
 
-Switch branches in SillyTavern if you prefer an older major version.
+如果你更喜欢旧的大版本，可以在 SillyTavern 中切换分支。
 
-- **v20:** Stop now pauses. Modular [STATE] experiment
-- **v19:** Changed prompts so less repair needed (second LLM pass).
-- **v18:** Improved UI + tooltip.
-- **v17:** Replaced ever-growing accumulated state with bounded rolling snapshots, shortened chronology anchors to spend fewer tokens on bookkeeping, and made compression repair section-aware. Failed output can now be repaired one bad section at a time instead of taking the whole summary back to the workshop. Layer 0 and promotion paths also gained stricter size checks and type guards.
-- **v16:** Refactored summarization routes, split memory style from memory placement, added Macro Only placement, and added assistant-role masking for outgoing chat-completion requests. Retry and atomic commit handling were pulled into dedicated helpers, Layer 0 gained a size-repair guard, and the tuning UI was cleaned up around context estimates and cache behavior.
-- **v15:** UI and prompt tweaks.
-- **v14:** Easy mode. ~~Less~~ Fewer controls up front, ~~saner~~ safer defaults.
-- **v13:** Memory pyramid tuning, temporal anchors, stricter summary integrity checks, and better promotion compression repair. This is the line that stopped long memories from collapsing into tiny broken outputs or promoting into barely smaller summaries.
-- **v12:** Stability pass. Tested on long roleplay chats around 2,000 to 3,000 messages. Main pain point was oversized state.
-- **v11:** Chinese ideograph output filter and the first dual-track memory architecture. Summaries split into narrative and state, with state merged by overwrite during promotion.
-- **v10:** Settings UI and prompt editor update. Layer 0 and Layer 1+ prompts became separate and editable. Debug logging was refactored, and summarizer fallback routing was added.
-- **v9:** Elastic memory budget, dual LLM profiles, and Cache Friendly mode.
-- **v8:** Slop Breaker for manually summarizing recent chat when the model gets stuck repeating itself.
-- **v7:** Replaced raw turn counts with the Verbatim Token Budget slider and improved snippet editing.
-- **v6:** Major modular rewrite with speedups, background processing fixes, and global regex support.
+- **v20：** 停止现在会暂停。模块化 [STATE] 实验
+- **v19：** 修改提示词以减少修复需求（第二次 LLM 通过）。
+- **v18：** 改进 UI 与工具提示。
+- **v17：** 用有界的滚动快照取代不断增长的累积状态，缩短时间线锚点以减少簿记开销，并让压缩修复按分节进行。失败输出现在可以逐节修复，而不必把整份摘要送回修理。Layer 0 与提升路径也加入了更严格的大小检查与类型守卫。
+- **v16：** 重构摘要路由，将记忆风格与记忆位置分离，新增仅宏位置，并为外发的聊天补全请求加入助手角色掩码。重试与原子提交处理被抽到独立辅助函数中，Layer 0 加入大小修复守卫，调优界面围绕上下文估算与缓存行为做了清理。
+- **v15：** UI 与提示词微调。
+- **v14：** 简易模式。前置控件更少，默认值更安全。
+- **v13：** 记忆金字塔调优、时间锚点、更严格的摘要完整性检查，以及更好的提升压缩修复。这条线阻止了长记忆塌缩成细小的坏输出，或提升成几乎没变小的摘要。
+- **v12：** 稳定性通过。在约 2000 到 3000 条消息的长角色扮演对话上测试。主要痛点是状态过大。
+- **v11：** 中文象形文字输出过滤器与首个双轨记忆架构。摘要分为叙事与状态，提升时状态按覆盖方式合并。
+- **v10：** 设置 UI 与提示词编辑器更新。Layer 0 与 Layer 1+ 提示词分离并可编辑。重构调试日志，新增摘要器回退路由。
+- **v9：** 弹性记忆预算、双 LLM 档案与缓存友好模式。
+- **v8：** 失控清理（Slop Breaker）：当模型卡住不断重复时手动摘要近期对话。
+- **v7：** 用逐字 token 预算滑块取代原始回合数，并改进片段编辑。
+- **v6：** 大规模模块化重写，带来加速、后台处理修复与全局正则支持。
 
-## Screenshots
+## 截图
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f1fda4c0-282e-4bbf-8924-98755fb461e0" width="180" alt="1" />
@@ -151,6 +162,6 @@ Switch branches in SillyTavern if you prefer an older major version.
   <img src="https://github.com/user-attachments/assets/88f5de03-4414-4b7d-8b1a-3bfa60b5d3f8" width="180" alt="5" />
 </p>
 
-## License
+## 许可证
 
-AGPL-3.0. See [LICENSE](LICENSE).
+AGPL-3.0。参见 [LICENSE](LICENSE)。

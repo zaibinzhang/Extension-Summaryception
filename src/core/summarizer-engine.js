@@ -186,8 +186,8 @@ async function buildForceTask(options, strategy) {
     return {
         kind: ELASTIC_STRATEGIES.FORCE,
         totalBatches: initialRoutePlan.totalBatches,
-        label: 'Processing',
-        title: 'Summaryception Catch-Up',
+        label: '处理中',
+        title: 'Summaryception 追补',
         options,
         targetIndex: initialRoutePlan.rawPlan.tokenBoundaryIndex,
         getBatch: getForceRoutePlan,
@@ -211,8 +211,8 @@ async function buildSlopTask(options, strategy) {
     return {
         kind: ELASTIC_STRATEGIES.SLOP,
         totalBatches: initialRoutePlan.totalBatches,
-        label: 'Breaking slop',
-        title: 'Summaryception Slop Breaker',
+        label: '正在清理失控',
+        title: 'Summaryception 失控清理',
         options,
         targetIndex,
         getBatch: async () =>

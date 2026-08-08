@@ -218,7 +218,7 @@ export async function fetchProfilesFallback($select, currentValue) {
 
         const profiles = await response.json();
 
-        $select.html('<option value="">-- Select a Profile --</option>');
+        $select.html('<option value="">-- 选择档案 --</option>');
 
         if (Array.isArray(profiles)) {
             for (const profile of profiles) {

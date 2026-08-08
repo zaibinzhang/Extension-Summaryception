@@ -777,7 +777,7 @@ async function notifyRetryAndWait(
     );
 
     toastr.warning(
-        `API error (${status}). Retrying in ${delaySec}s... (${attempt + 1}/${maxRetries})`,
+        `API 错误（${status}）。将在 ${delaySec} 秒后重试…（${attempt + 1}/${maxRetries}）`,
         'Summaryception',
         { timeOut: delay },
     );
@@ -799,11 +799,9 @@ async function notifyRouteCycleFailedAndWait({ healthBucket, signal }) {
         `Both primary and fallback exhausted for ${healthBucket}; ` +
             `resetting health state and retrying primary in ${delaySec}s.`,
     );
-    toastr.warning(
-        `Both summarizer routes failed. Retrying primary in ${delaySec}s...`,
-        'Summaryception',
-        { timeOut: delay },
-    );
+    toastr.warning(`两条摘要路由都失败。将在 ${delaySec} 秒后重试主路由…`, 'Summaryception', {
+        timeOut: delay,
+    });
     await sleepUntilOrAborted(delay, signal);
 }
 
@@ -829,7 +827,7 @@ function sleepUntilOrAborted(delay, signal) {
  */
 function abortWithToast() {
     debug('Summarization aborted by user.');
-    toastr.warning('Summarization aborted.', 'Summaryception', { timeOut: 3000 });
+    toastr.warning('摘要已中止。', 'Summaryception', { timeOut: 3000 });
     return '';
 }
 
@@ -855,10 +853,10 @@ function failSummarization(lastError, { retriesExhausted = true } = {}) {
     }
 
     const status = lastError?.status || lastError?.response?.status || '';
-    const retryText = retriesExhausted ? ` after ${RETRY_CONFIG.maxRetries} retries` : '';
+    const retryText = retriesExhausted ? `（已重试 ${RETRY_CONFIG.maxRetries} 次）` : '';
     logError(`Summarization failed${retryText}:`, lastError);
     toastr.error(
-        `Summarization failed${retryText}${status ? ` (${status})` : ''}. Batch skipped — will retry on next trigger.`,
+        `摘要失败${retryText}${status ? `（${status}）` : ''}。批次已跳过——将在下次触发时重试。`,
         'Summaryception',
         { timeOut: 8000 },
     );
@@ -893,10 +891,10 @@ async function checkEasyContextGuard(settings, systemPrompt, prompt, metadata = 
 function buildEasyContextGuardError(guard, metadata = {}) {
     const label = guard.label || describePromptLogCall(metadata);
     const message =
-        `Easy mode blocked ${label}: summarizer request is ` +
-        `${formatTokenValue(guard.tokens.count, guard.tokens.estimated)} tokens, above the ` +
-        `${formatTokenValue(guard.limit)} Easy Summarizer Context cap. ` +
-        'Raise the Easy context slider or switch to Advanced.';
+        `简易模式已阻止 ${label}：摘要器请求为 ` +
+        `${formatTokenValue(guard.tokens.count, guard.tokens.estimated)} token，超过 ` +
+        `${formatTokenValue(guard.limit)} 的简易摘要器上下文上限。` +
+        '请调高简易上下文滑块，或切换到高级模式。';
     const error = /** @type {ConnectionError & { easyContextGuard?: boolean }} */ (
         new ConnectionError(message, { retryable: false })
     );
@@ -911,18 +909,18 @@ function buildEasyContextGuardError(guard, metadata = {}) {
  */
 function describePromptLogCall(metadata = {}) {
     if (metadata.kind === 'layer0') {
-        return `L0 turns ${formatPromptLogRange(metadata.sourceRange)}`;
+        return `L0 回合 ${formatPromptLogRange(metadata.sourceRange)}`;
     }
     if (metadata.kind === 'promotion') {
         const sourceLayer = metadata.layerIndex ?? '?';
         const destLayer = typeof metadata.layerIndex === 'number' ? metadata.layerIndex + 1 : '?';
         const count = formatPromptLogCount(metadata.mergedSnippetCount, 'snippet');
-        return `promotion L${sourceLayer}->L${destLayer} (${count})`;
+        return `提升 L${sourceLayer}->L${destLayer}（${count}）`;
     }
     if (metadata.kind === 'regenerate') {
-        return `regenerate turns ${formatPromptLogRange(metadata.sourceRange)}`;
+        return `重新生成回合 ${formatPromptLogRange(metadata.sourceRange)}`;
     }
-    return metadata.kind || 'summarizer';
+    return metadata.kind || '摘要器';
 }
 
 /**
