@@ -159,7 +159,7 @@ export const defaultSettings = Object.freeze({
     // range. They carry no text to summarize, so without this they stay visible to the
     // model and leave gaps in the hidden range that still cost context.
     hideNonTextMessages: true,
-    stripChineseIdeographs: true, // true = strip Han ideographs from summarizer responses
+    stripChineseIdeographs: false, // true = strip Han ideographs from summarizer responses (禁用，记忆需保留中文)
     maskUserRoleAsAssistant: false, // true = rewrite outgoing user-role request blocks as assistant
     maskUserRoleMode: MASK_USER_ROLE_MODES.MARKER_FIRST,
 

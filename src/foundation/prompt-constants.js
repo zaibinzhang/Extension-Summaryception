@@ -6,7 +6,7 @@ import {
 } from '../core/prompt-parts.js';
 
 export const ENGLISH_FIRST_LANGUAGE_RULE =
-    'Write the output mainly in English. Short non-English names, titles, quoted terms, or source-language phrases are allowed when useful, but do not write Chinese prose or Han ideographs.';
+    'Write the output in the same language as the source passage. The source passages are in Chinese, so write the entire summary in Chinese — do not translate it into English. Faithfully preserve the original meaning, and keep proper names, place names, titles, and quoted dialogue exactly as they appear in the source; never transliterate or reword them into another language. Keep structured state keys (current_date_time, inventory, location, gm_notes, etc.) unchanged and write their values in Chinese.';
 
 export const ANTI_RUN_ON_RULE =
     'Write in short, direct sentences. Prefer periods over commas and semicolons; do not chain actions together with commas, semicolons, or conjunctions into run-on sentences. Limit each sentence to roughly two actions or events.';
@@ -48,8 +48,8 @@ export const PROMOTION_MODERATE_MACRO_RULES =
  * mid-sentence in the narrative body, never as a date lead-in.
  */
 export const PROSE_DATE_FORMAT_RULE =
-    'In [NARRATIVE] prose, write dates in calendar form only: month name and day number, no year, no ISO syntax, no clock time. ' +
-    'Write "On July 6" not "On July 6, 2024", not "On 2024-07-06", not "On July 6 at 19:00". ' +
+    'In [NARRATIVE] prose, write dates in calendar form only: month and day, no year, no ISO syntax, no clock time. ' +
+    'Write "7月6日" not "2024年7月6日", not "2024-07-06", not "7月6日 19:00". ' +
     'The current year and exact hour live only in current_date_time; never duplicate them into prose. ' +
     'A clock time may appear once mid-sentence when it carries story weight (an alarm, a deadline, a shift boundary); never use it as a date lead-in.';
 
@@ -70,7 +70,7 @@ export const RECALL_REPEAT_INJECTION_TEMPLATE =
 
 export const DEFAULT_SUMMARIZER_SYSTEM_PROMPT = buildSystemPrompt(
     'Role: narrative-state dual compressor. Output a [NARRATIVE] paragraph and a [STATE] key-value block.',
-    'No preamble, no commentary, no markdown code fences.\nNever use second-person pronouns in the output.\nWrite the output mainly in English; short non-English names, titles, and source-language phrases are allowed.',
+    'No preamble, no commentary, no markdown code fences.\nNever use second-person pronouns in the output.\nWrite the output in the same language as the source passage — the source is Chinese, so output the summary in Chinese. Preserve proper names and quoted dialogue exactly as written.',
 );
 
 export const DEFAULT_SUMMARIZER_USER_PROMPT = buildUserPrompt({
@@ -162,7 +162,7 @@ ${ANTI_RUN_ON_RULE}`,
 
 export const DEFAULT_PROMOTION_SYSTEM_PROMPT = buildSystemPrompt(
     'Role: prose-folding memory synthesizer. Fold durable state into narrative continuity, then output one consolidated [NARRATIVE] paragraph only.',
-    'No [STATE] block, no preamble, no commentary, no markdown.\nNever use second-person pronouns in the output.\nWrite the output mainly in English; short non-English names, titles, and source-language phrases are allowed.',
+    'No [STATE] block, no preamble, no commentary, no markdown.\nNever use second-person pronouns in the output.\nWrite the output in the same language as the source passages — the source is Chinese, so output the summary in Chinese. Preserve proper names and quoted dialogue exactly as written.',
 );
 
 export const DEFAULT_PROMOTION_USER_PROMPT = buildUserPrompt({
